@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Qatu.Application.DTOs;
+using Qatu.Application.DTOs.Product;
+using Qatu.Application.UseCases.Products;
 
+[ApiController]
+[Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
     private readonly GetProductByIdUseCase _getProductById;
