@@ -1,51 +1,43 @@
 using Microsoft.AspNetCore.Mvc;
+using Qatu.Application.DTOs.Product;
+using Qatu.Application.UseCases.Products;
 
 [ApiController]
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly GetProductByIdHandler _handler;
-    private readonly UpdateProductPriceHandler _updateHandler;
+    private readonly GetProductByIdUseCase _getProductById;
+    private readonly UpdateProductPriceUseCase _updatePrice;
+    private readonly UpdateProductStockUseCase _updateStock;
 
-    private readonly UpdateProductStockHandler _updateStockHandler;
-
-
-    public ProductsController(GetProductByIdHandler handler, UpdateProductPriceHandler updateHandler, UpdateProductStockHandler updateStockHandler)
+    public ProductsController(GetProductByIdUseCase getProductById,
+                              UpdateProductPriceUseCase updatePrice,
+                              UpdateProductStockUseCase updateStock)
     {
-        _handler = handler;
-        _updateHandler = updateHandler;
-        _updateStockHandler = updateStockHandler;
+        _getProductById = getProductById;
+        _updatePrice = updatePrice;
+        _updateStock = updateStock;
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var product = await _handler.HandleAsync(id);
-        if (product == null)
-            return NotFound();
-
+        var product = await _getProductById.ExecuteAsync(id);
+        if (product == null) return NotFound();
         return Ok(product);
     }
 
     [HttpPut("update-price")]
-    public async Task<IActionResult> UpdatePrice([FromBody] UpdateProductPriceDto command)
+    public async Task<IActionResult> UpdatePrice([FromBody] UpdateProductPriceDto dto)
     {
-        var result = await _updateHandler.HandleAsync(command);
-        if (!result)
-            return NotFound();
-
-        return NoContent();
+        var result = await _updatePrice.ExecuteAsync(dto);
+        return result ? NoContent() : NotFound();
     }
 
     [HttpPut("update-stock")]
-    public async Task<IActionResult> UpdateStock([FromBody] UpdateProductStockDto command)
+    public async Task<IActionResult> UpdateStock([FromBody] UpdateProductStockDto dto)
     {
-        var result = await _updateStockHandler.HandleAsync(command);
-        if (!result)
-            return NotFound();
-
-        return NoContent();
+        var result = await _updateStock.ExecuteAsync(dto);
+        return result ? NoContent() : NotFound();
     }
 }
-
-
