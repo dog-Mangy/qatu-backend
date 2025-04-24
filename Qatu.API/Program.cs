@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<GetProductByIdHandler>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<UpdateProductPriceHandler>();
+builder.Services.AddScoped<UpdateProductStockHandler>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 
