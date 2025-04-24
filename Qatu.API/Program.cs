@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Repositories;
+using Qatu.Application.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
