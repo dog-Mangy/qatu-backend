@@ -15,3 +15,36 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{baseUrl}}{{products}}/bulk
+Accept: application/json
+Content-Type: application/json
+
+{
+  "products": [
+    {
+      "storeId": 1,
+      "name": "Lego Creator",
+      "description": "Building toy set",
+      "category": "Toys",
+      "price": 29.99,
+      "stock": 15
+    },
+    {
+      "storeId": 1,
+      "name": "Color Pencils Pack",
+      "description": "Pack of 24 colored pencils",
+      "category": "Stationery",
+      "price": 5.49
+    },
+    {
+      "storeId": 1,
+      "name": "RC Car",
+      "category": "Electronics",
+      "price": 45.00,
+      "stock": 10
+    }
+  ]
+}
+
+###
