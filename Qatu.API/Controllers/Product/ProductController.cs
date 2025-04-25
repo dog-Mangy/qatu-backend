@@ -10,17 +10,20 @@ public class ProductsController : ControllerBase
     private readonly UpdateProductPriceUseCase _updatePrice;
     private readonly UpdateProductStockUseCase _updateStock;
     private readonly GetProductsByStoreIdUseCase _getProductsByStoreId;
+    private readonly DeleteProductUseCase _deleteProduct;
 
 
     public ProductsController(GetProductByIdUseCase getProductById,
                               UpdateProductPriceUseCase updatePrice,
                               UpdateProductStockUseCase updateStock,
-                              GetProductsByStoreIdUseCase getProductsByStoreId)
+                              GetProductsByStoreIdUseCase getProductsByStoreId,
+                              DeleteProductUseCase deleteProduct)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
         _updateStock = updateStock;
         _getProductsByStoreId = getProductsByStoreId;
+        _deleteProduct = deleteProduct;
     }
 
     [HttpGet("{id}")]
@@ -52,4 +55,12 @@ public class ProductsController : ControllerBase
         return Ok(products);
     }
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _deleteProduct.ExecuteAsync(id);
+        if (!result) return NotFound();
+
+        return NoContent(); 
+    }
 }
