@@ -9,14 +9,18 @@ public class ProductsController : ControllerBase
     private readonly GetProductByIdUseCase _getProductById;
     private readonly UpdateProductPriceUseCase _updatePrice;
     private readonly UpdateProductStockUseCase _updateStock;
+    private readonly GetProductsByStoreIdUseCase _getProductsByStoreId;
+
 
     public ProductsController(GetProductByIdUseCase getProductById,
                               UpdateProductPriceUseCase updatePrice,
-                              UpdateProductStockUseCase updateStock)
+                              UpdateProductStockUseCase updateStock,
+                              GetProductsByStoreIdUseCase getProductsByStoreId)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
         _updateStock = updateStock;
+        _getProductsByStoreId = getProductsByStoreId;
     }
 
     [HttpGet("{id}")]
@@ -40,4 +44,12 @@ public class ProductsController : ControllerBase
         var result = await _updateStock.ExecuteAsync(dto);
         return result ? NoContent() : NotFound();
     }
+
+    [HttpGet("store/{storeId}")]
+    public async Task<IActionResult> GetByStoreId(int storeId)
+    {
+        var products = await _getProductsByStoreId.ExecuteAsync(storeId);
+        return Ok(products);
+    }
+
 }

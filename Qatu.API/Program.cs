@@ -11,6 +11,8 @@ builder.Services.AddScoped<GetProductByIdUseCase>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<UpdateProductPriceUseCase>();
 builder.Services.AddScoped<UpdateProductStockUseCase>();
+builder.Services.AddScoped<GetProductsByStoreIdUseCase>();
+
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
