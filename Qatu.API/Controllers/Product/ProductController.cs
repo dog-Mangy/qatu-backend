@@ -11,18 +11,25 @@ public class ProductsController : ControllerBase
     private readonly UpdateProductStockUseCase _updateStock;
     private readonly CreateProductUseCase _createProduct;
     private readonly CreateProductListUseCase _createProductList;
+    private readonly GetProductsByStoreIdUseCase _getProductsByStoreId;
+    private readonly DeleteProductUseCase _deleteProduct;
+
 
     public ProductsController(GetProductByIdUseCase getProductById,
                               UpdateProductPriceUseCase updatePrice,
                               UpdateProductStockUseCase updateStock,
                               CreateProductUseCase createProduct,
-                              CreateProductListUseCase createProductList)
+                              CreateProductListUseCase createProductList,
+                              GetProductsByStoreIdUseCase getProductsByStoreId,
+                              DeleteProductUseCase deleteProduct)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
         _updateStock = updateStock;
         _createProduct = createProduct;
         _createProductList = createProductList;
+        _getProductsByStoreId = getProductsByStoreId;
+        _deleteProduct = deleteProduct;
     }
 
     [HttpGet("{id}")]
@@ -61,5 +68,22 @@ public class ProductsController : ControllerBase
         var multipleProducts = await _createProductList.HandleAsync(dto.Products);
 
         return Ok(multipleProducts);
+    }
+
+
+    [HttpGet("store/{storeId}")]
+    public async Task<IActionResult> GetByStoreId(int storeId)
+    {
+        var products = await _getProductsByStoreId.ExecuteAsync(storeId);
+        return Ok(products);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var result = await _deleteProduct.ExecuteAsync(id);
+        if (!result) return NotFound();
+
+        return NoContent(); 
     }
 }
