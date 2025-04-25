@@ -6,6 +6,7 @@ namespace Qatu.Domain.Interfaces
     {
         Task<Product?> GetByIdAsync(int id);
         Task<IEnumerable<Product>> GetAllAsync();
+        Task<IEnumerable<Product>> AddAsyncRange(List<Product> products);
         Task<IEnumerable<Product>> GetByStoreIdAsync(int storeId);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
