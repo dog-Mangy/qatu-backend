@@ -4,13 +4,14 @@ using Qatu.Infrastructure.Persistence;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Repositories;
 using Qatu.Application.UseCases;
+using Qatu.Application.UseCases.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<GetProductByIdHandler>();
+builder.Services.AddScoped<GetProductByIdUseCase>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<UpdateProductPriceHandler>();
-builder.Services.AddScoped<UpdateProductStockHandler>();
+builder.Services.AddScoped<UpdateProductPriceUseCase>();
+builder.Services.AddScoped<UpdateProductStockUseCase>();
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
