@@ -1,6 +1,78 @@
 # Backend
 
 
+## Database Setup
+
+This project uses MySQL as the database, configured via Docker Compose. Follow these steps to set up the database.
+
+### Requirements
+
+- Docker and Docker Compose installed.
+
+### Configuration
+
+1. **Create `.env` file**:
+
+   - Copy `example.env` to `.env`:
+     ```bash
+     cp example.env .env
+     ```
+   - The `example.env` contains:
+     ```
+     MYSQL_PORT=3306
+     MYSQL_ROOT_PASSWORD=rootpassword
+     MYSQL_DATABASE=DS4_Qatu
+     MYSQL_USER=user
+     MYSQL_PASSWORD=userpassword
+     ```
+   - Adjust values in `.env` if needed (e.g., change passwords).
+
+2. **Set up `compose.yaml`**:
+
+   - The `compose.yaml` configures a MySQL 8.4.5 container:
+     ```yaml
+     services:
+       db:
+         image: mysql:8.4.5
+         container_name: db
+         restart: unless-stopped
+         ports:
+           - ${MYSQL_PORT}:3306
+         environment:
+           - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+           - MYSQL_DATABASE=${MYSQL_DATABASE}
+           - MYSQL_USER=${MYSQL_USER}
+           - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+           - MYSQL_PORT=3306
+         volumes:
+           - mysql_data:/var/lib/mysql
+     volumes:
+       mysql_data:
+     ```
+
+3. **Start the database**:
+
+   - Run the following command to start the MySQL container:
+     ```bash
+     docker compose up -d
+     ```
+   - Verify the container is running:
+     ```bash
+     docker logs db
+     ```
+
+4. **Connect to the database**:
+   - Use a MySQL client or command line to connect:
+     ```bash
+     docker exec -it db mysql -u user -p
+     ```
+   - Enter the password (`userpassword` by default).
+
+### Notes
+
+- Ensure `.env` is not committed to the repository (it’s in `.gitignore`).
+- The database `DS4_Qatu` is created automatically on container startup.
+- If you change `MYSQL_PORT`, update the connection string in `appsettings.json`.
 
 ## Getting started
 
