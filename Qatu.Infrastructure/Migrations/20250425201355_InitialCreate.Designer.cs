@@ -12,7 +12,7 @@ using Qatu.Infrastructure.Persistence;
 namespace Qatu.Infrastructure.Migrations
 {
     [DbContext(typeof(QatuDbContext))]
-    [Migration("20250425194041_InitialCreate")]
+    [Migration("20250425201355_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -66,6 +66,44 @@ namespace Qatu.Infrastructure.Migrations
                     b.HasIndex("StoreId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Electronics",
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(5049),
+                            Description = "Latest model smartphone",
+                            Name = "Smartphone",
+                            Price = 699.99m,
+                            Rating = 4.5m,
+                            Stock = 50,
+                            StoreId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Electronics",
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(5051),
+                            Description = "High-performance laptop",
+                            Name = "Laptop",
+                            Price = 1299.99m,
+                            Rating = 4.8m,
+                            Stock = 20,
+                            StoreId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = "Clothing",
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(5053),
+                            Description = "Blue denim jeans",
+                            Name = "Jeans",
+                            Price = 49.99m,
+                            Rating = 4.2m,
+                            Stock = 100,
+                            StoreId = 2
+                        });
                 });
 
             modelBuilder.Entity("Qatu.Domain.Entities.Store", b =>
@@ -94,6 +132,24 @@ namespace Qatu.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Stores");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(5024),
+                            Description = "Electronics and gadgets",
+                            Name = "Tech Store",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(5026),
+                            Description = "Clothing and accessories",
+                            Name = "Fashion Store",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Qatu.Domain.Entities.User", b =>
@@ -125,6 +181,35 @@ namespace Qatu.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(4934),
+                            Email = "admin@qatu.com",
+                            Name = "Admin User",
+                            Password = "password123",
+                            Role = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(4936),
+                            Email = "seller@qatu.com",
+                            Name = "Seller User",
+                            Password = "password123",
+                            Role = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2025, 4, 25, 20, 13, 54, 931, DateTimeKind.Utc).AddTicks(4937),
+                            Email = "buyer@qatu.com",
+                            Name = "Buyer User",
+                            Password = "password123",
+                            Role = 1
+                        });
                 });
 
             modelBuilder.Entity("Qatu.Domain.Entities.Product", b =>
