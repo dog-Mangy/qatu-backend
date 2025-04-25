@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Repositories;
-using Qatu.Application.UseCases;
 using Qatu.Application.UseCases.Products;
 
 var builder = WebApplication.CreateBuilder(args);
