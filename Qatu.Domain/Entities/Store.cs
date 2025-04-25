@@ -1,11 +1,4 @@
-﻿using Qatu.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Qatu.Domain.Entities
+﻿namespace Qatu.Domain.Entities
 {
     public class Store
     {
