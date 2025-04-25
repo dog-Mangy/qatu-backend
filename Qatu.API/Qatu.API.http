@@ -1,6 +1,17 @@
-@Qatu.API_HostAddress = http://localhost:5028
+@baseUrl = http://localhost:5028/api
+@products = /products
 
-GET {{Qatu.API_HostAddress}}/weatherforecast/
+POST  {{baseUrl}}{{products}}
 Accept: application/json
+Content-Type: application/json
+
+{
+  "StoreId": 1,
+  "Name": "toy box",
+  "Description": "Toy box for children aged 9 to 10.",
+  "Category": "toys for children",
+  "Price": 11,
+  "Stock": 7
+}
 
 ###
