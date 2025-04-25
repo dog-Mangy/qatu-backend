@@ -9,14 +9,20 @@ public class ProductsController : ControllerBase
     private readonly GetProductByIdUseCase _getProductById;
     private readonly UpdateProductPriceUseCase _updatePrice;
     private readonly UpdateProductStockUseCase _updateStock;
+    private readonly CreateProductUseCase _createProduct;
+    private readonly CreateProductListUseCase _createProductList;
 
     public ProductsController(GetProductByIdUseCase getProductById,
                               UpdateProductPriceUseCase updatePrice,
-                              UpdateProductStockUseCase updateStock)
+                              UpdateProductStockUseCase updateStock,
+                              CreateProductUseCase createProduct,
+                              CreateProductListUseCase createProductList)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
         _updateStock = updateStock;
+        _createProduct = createProduct;
+        _createProductList = createProductList;
     }
 
     [HttpGet("{id}")]
@@ -39,5 +45,21 @@ public class ProductsController : ControllerBase
     {
         var result = await _updateStock.ExecuteAsync(dto);
         return result ? NoContent() : NotFound();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto command)
+    {
+        var product = await _createProduct.HandleAsync(command);
+
+        return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+    }
+
+    [HttpPost("bulk")]
+    public async Task<IActionResult> CreateMultipleProducts([FromBody] CreateProductListDto dto)
+    {
+        var multipleProducts = await _createProductList.HandleAsync(dto.Products);
+
+        return Ok(multipleProducts);
     }
 }
