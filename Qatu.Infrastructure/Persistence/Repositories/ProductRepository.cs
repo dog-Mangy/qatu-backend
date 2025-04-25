@@ -27,7 +27,7 @@ namespace Qatu.Infrastructure.Repositories
         public async Task<IEnumerable<Product>> GetByStoreIdAsync(int storeId)
         {
             return await _context.Products
-                .Where(p => p.StoreId == storeId) 
+                .Where(p => p.StoreId == storeId)
                 .ToListAsync();
         }
 
@@ -35,6 +35,16 @@ namespace Qatu.Infrastructure.Repositories
         {
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Product>> AddAsyncRange(List<Product> products)
+        {
+            await _context.Products.AddRangeAsync(products);
+            await _context.SaveChangesAsync();
+            
+            _context.ChangeTracker.Clear();
+
+            return products;
         }
 
         public async Task UpdateAsync(Product product)

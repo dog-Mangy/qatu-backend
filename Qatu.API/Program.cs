@@ -12,8 +12,8 @@ builder.Services.AddScoped<UpdateProductPriceUseCase>();
 builder.Services.AddScoped<UpdateProductStockUseCase>();
 builder.Services.AddScoped<GetProductsByStoreIdUseCase>();
 builder.Services.AddScoped<DeleteProductUseCase>();
-
-
+builder.Services.AddScoped<CreateProductUseCase>();
+builder.Services.AddScoped<CreateProductListUseCase>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 
@@ -21,11 +21,11 @@ builder.Services.AddDbContext<QatuDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
 
-builder.Services.AddControllers(); 
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-app.MapControllers(); 
+app.MapControllers();
 
 app.Run();
