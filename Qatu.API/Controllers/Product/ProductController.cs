@@ -13,6 +13,9 @@ public class ProductsController : ControllerBase
     private readonly CreateProductListUseCase _createProductList;
     private readonly GetProductsByStoreIdUseCase _getProductsByStoreId;
     private readonly DeleteProductUseCase _deleteProduct;
+    private readonly GetProductsPagedUseCase _getProductsPaged;
+
+
 
 
     public ProductsController(GetProductByIdUseCase getProductById,
@@ -21,7 +24,8 @@ public class ProductsController : ControllerBase
                               CreateProductUseCase createProduct,
                               CreateProductListUseCase createProductList,
                               GetProductsByStoreIdUseCase getProductsByStoreId,
-                              DeleteProductUseCase deleteProduct)
+                              DeleteProductUseCase deleteProduct,
+                              GetProductsPagedUseCase getProducstPaged)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
@@ -30,7 +34,19 @@ public class ProductsController : ControllerBase
         _createProductList = createProductList;
         _getProductsByStoreId = getProductsByStoreId;
         _deleteProduct = deleteProduct;
+        _getProductsPaged = getProducstPaged;
     }
+
+    [HttpGet("paged")]
+
+    public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? storeId = null)
+    {
+        var pagedProducts = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
+        return Ok(pagedProducts);
+    }
+
+
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
@@ -86,4 +102,6 @@ public class ProductsController : ControllerBase
 
         return NoContent(); 
     }
+
+    
 }
