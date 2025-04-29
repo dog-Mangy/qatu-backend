@@ -41,7 +41,7 @@ namespace Qatu.Infrastructure.Repositories
         {
             await _context.Products.AddRangeAsync(products);
             await _context.SaveChangesAsync();
-            
+
             _context.ChangeTracker.Clear();
 
             return products;
@@ -61,6 +61,38 @@ namespace Qatu.Infrastructure.Repositories
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
             }
+        }
+
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Products.CountAsync();
+        }
+
+        public async Task<int> CountByStoreAsync(int storeId)
+        {
+            return await _context.Products
+                .Where(p => p.StoreId == storeId)
+                .CountAsync();
+        }
+
+        public async Task<List<Product>> GetPagedAsync(int page, int pageSize)
+        {
+            return await _context.Products
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<List<Product>> GetPagedByStoreAsync(int storeId, int page, int pageSize)
+        {
+            return await _context.Products
+                .Where(p => p.StoreId == storeId)
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
     }
 }

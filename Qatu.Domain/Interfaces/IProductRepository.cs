@@ -15,6 +15,5 @@ namespace Qatu.Domain.Interfaces
         Task<int> CountByStoreAsync(int storeId);
         Task<List<Product>> GetPagedAsync(int page, int pageSize);
         Task<List<Product>> GetPagedByStoreAsync(int storeId, int page, int pageSize);
-
     }
 }
