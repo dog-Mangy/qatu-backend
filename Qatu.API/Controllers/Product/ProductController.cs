@@ -36,17 +36,10 @@ public class ProductsController : ControllerBase
         _deleteProduct = deleteProduct;
         _getProductsPaged = getProducstPaged;
     }
-    [HttpGet("paged")]
+    [HttpGet]
     public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
         var result = await _getProductsPaged.ExecuteAsync(page, pageSize);
-        return Ok(result);
-    }
-
-    [HttpGet("store/{storeId}/paged")]
-    public async Task<IActionResult> GetPagedByStore(int storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
-    {
-        var result = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
         return Ok(result);
     }
 
@@ -89,11 +82,17 @@ public class ProductsController : ControllerBase
     }
 
 
-    [HttpGet("store/{storeId}")]
-    public async Task<IActionResult> GetByStoreId(int storeId)
+    [HttpGet("/api/stores/{storeId}/products")]
+    public async Task<IActionResult> GetByStoreId(int storeId, [FromQuery] int? page, [FromQuery] int? pageSize)
     {
-        var products = await _getProductsByStoreId.ExecuteAsync(storeId);
-        return Ok(products);
+        if (!page.HasValue || !pageSize.HasValue)
+        {
+            var products = await _getProductsByStoreId.ExecuteAsync(storeId);
+            return Ok(products);
+        }
+
+        var result = await _getProductsPaged.ExecuteAsync(page.Value, pageSize.Value, storeId);
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
@@ -104,6 +103,4 @@ public class ProductsController : ControllerBase
 
         return NoContent(); 
     }
-
-    
 }
