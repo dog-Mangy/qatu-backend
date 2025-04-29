@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Qatu.Application.DTOs
+﻿namespace Qatu.Application.DTOs
 {
     public class PagedResult<T>
     {
@@ -13,5 +7,7 @@ namespace Qatu.Application.DTOs
         public int PageSize { get; set; }
         public bool HasNext { get; set; }
         public bool HasPrevious { get; set; }
+        public int NPages { get; set; }
+        public int NElements { get; set; }
     }
 }
