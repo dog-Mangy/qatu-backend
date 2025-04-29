@@ -36,17 +36,19 @@ public class ProductsController : ControllerBase
         _deleteProduct = deleteProduct;
         _getProductsPaged = getProducstPaged;
     }
-
     [HttpGet("paged")]
-
-    public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] int? storeId = null)
+    public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
-        var pagedProducts = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
-        return Ok(pagedProducts);
+        var result = await _getProductsPaged.ExecuteAsync(page, pageSize);
+        return Ok(result);
     }
 
-
-
+    [HttpGet("store/{storeId}/paged")]
+    public async Task<IActionResult> GetPagedByStore(int storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    {
+        var result = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
+        return Ok(result);
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Qatu.Application.UseCases
+namespace Qatu.Application.DTOs
 {
     public class PagedResult<T>
     {
