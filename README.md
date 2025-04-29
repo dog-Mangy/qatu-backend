@@ -1,5 +1,7 @@
 # Backend
 
+This is the backend for the Qatu project, built with .NET 9.0 and MySQL. It follows a clean architecture with separate layers for API, Application, Domain, and Infrastructure.
+
 ## Database Setup
 
 This project uses MySQL as the database, configured via Docker Compose. Follow these steps to set up the database.
@@ -7,6 +9,12 @@ This project uses MySQL as the database, configured via Docker Compose. Follow t
 ### Requirements
 
 - Docker and Docker Compose installed.
+- .NET SDK 9.0 installed.
+- Entity Framework Core CLI (`dotnet-ef`) installed globally:
+  ```bash
+  dotnet tool install --global dotnet-ef
+  export PATH="$PATH:$HOME/.dotnet/tools"
+  ```
 
 ### Configuration
 
@@ -60,12 +68,40 @@ This project uses MySQL as the database, configured via Docker Compose. Follow t
      docker logs db
      ```
 
-4. **Connect to the database**:
+4. **Generate and apply database migrations**:
+
+   - Navigate to the Infrastructure project:
+     ```bash
+     cd Qatu.Infrastructure
+     ```
+   - Generate the initial migration:
+     ```bash
+     dotnet ef migrations add InitialCreate
+     ```
+   - Apply the migrations to create the database:
+     ```bash
+     dotnet ef database update
+     ```
+   - To seed initial data (Users, Stores, Products), generate and apply the seeding migration:
+     ```bash
+     dotnet ef migrations add AddInitialData
+     dotnet ef database update
+     ```
+
+5. **Connect to the database** (optional):
+
    - Use a MySQL client or command line to connect:
      ```bash
      docker exec -it db mysql -u user -p
      ```
    - Enter the password (`userpassword` by default).
+   - Verify seeded data:
+     ```sql
+     USE DS4_Qatu;
+     SELECT * FROM Users;
+     SELECT * FROM Stores;
+     SELECT * FROM Products;
+     ```
 
 ### Notes
 
