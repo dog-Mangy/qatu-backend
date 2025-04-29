@@ -79,7 +79,7 @@ namespace Qatu.Infrastructure.Repositories
         public async Task<List<Product>> GetPagedAsync(int page, int pageSize)
         {
             return await _context.Products
-                .OrderBy(p => p.Id)
+                .OrderByDescending(p => p.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -89,7 +89,7 @@ namespace Qatu.Infrastructure.Repositories
         {
             return await _context.Products
                 .Where(p => p.StoreId == storeId)
-                .OrderBy(p => p.Id)
+                .OrderByDescending(p => p.Id)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
