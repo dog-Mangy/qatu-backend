@@ -83,9 +83,9 @@ public class ProductsController : ControllerBase
 
 
     [HttpGet("/api/stores/{storeId}/products")]
-    public async Task<IActionResult> GetByStoreId(int storeId, [FromQuery] int? page, [FromQuery] int? pageSize)
+    public async Task<IActionResult> GetByStoreId(int storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
-        var result = await _getProductsPaged.ExecuteAsync(page.Value, pageSize.Value, storeId);
+        var result = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
         return Ok(result);
     }
 
