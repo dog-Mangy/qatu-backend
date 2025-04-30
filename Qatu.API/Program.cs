@@ -14,6 +14,8 @@ builder.Services.AddScoped<GetProductsByStoreIdUseCase>();
 builder.Services.AddScoped<DeleteProductUseCase>();
 builder.Services.AddScoped<CreateProductUseCase>();
 builder.Services.AddScoped<CreateProductListUseCase>();
+builder.Services.AddScoped<GetProductsPagedUseCase>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 

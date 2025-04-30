@@ -11,5 +11,9 @@ namespace Qatu.Domain.Interfaces
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
+        Task<int> CountAsync();
+        Task<int> CountByStoreAsync(int storeId);
+        Task<List<Product>> GetPagedAsync(int page, int pageSize);
+        Task<List<Product>> GetPagedByStoreAsync(int storeId, int page, int pageSize);
     }
 }
