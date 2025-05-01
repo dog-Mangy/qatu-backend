@@ -13,6 +13,9 @@ public class ProductsController : ControllerBase
     private readonly CreateProductListUseCase _createProductList;
     private readonly GetProductsByStoreIdUseCase _getProductsByStoreId;
     private readonly DeleteProductUseCase _deleteProduct;
+    private readonly GetProductsPagedUseCase _getProductsPaged;
+
+
 
 
     public ProductsController(GetProductByIdUseCase getProductById,
@@ -21,7 +24,8 @@ public class ProductsController : ControllerBase
                               CreateProductUseCase createProduct,
                               CreateProductListUseCase createProductList,
                               GetProductsByStoreIdUseCase getProductsByStoreId,
-                              DeleteProductUseCase deleteProduct)
+                              DeleteProductUseCase deleteProduct,
+                              GetProductsPagedUseCase getProducstPaged)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
@@ -30,6 +34,13 @@ public class ProductsController : ControllerBase
         _createProductList = createProductList;
         _getProductsByStoreId = getProductsByStoreId;
         _deleteProduct = deleteProduct;
+        _getProductsPaged = getProducstPaged;
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    {
+        var result = await _getProductsPaged.ExecuteAsync(page, pageSize);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
@@ -71,11 +82,11 @@ public class ProductsController : ControllerBase
     }
 
 
-    [HttpGet("store/{storeId}")]
-    public async Task<IActionResult> GetByStoreId(int storeId)
+    [HttpGet("/api/stores/{storeId}/products")]
+    public async Task<IActionResult> GetByStoreId(int storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
-        var products = await _getProductsByStoreId.ExecuteAsync(storeId);
-        return Ok(products);
+        var result = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
