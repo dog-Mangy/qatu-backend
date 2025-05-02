@@ -12,7 +12,7 @@ namespace Qatu.Application.UseCases.Products
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Product>> ExecuteAsync(int storeId)
+        public async Task<IEnumerable<Product>> ExecuteAsync(Guid storeId)
         {
             return await _repository.GetByStoreIdAsync(storeId);
         }

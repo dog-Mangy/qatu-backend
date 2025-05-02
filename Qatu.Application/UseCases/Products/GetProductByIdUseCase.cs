@@ -12,7 +12,7 @@ namespace Qatu.Application.UseCases.Products
             _repository = repository;
         }
 
-        public async Task<Product?> ExecuteAsync(int id)
+        public async Task<Product?> ExecuteAsync(Guid id)
         {
             return await _repository.GetByIdAsync(id);
         }
