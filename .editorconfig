@@ -1,0 +1,26 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+
+[*.cs]
+indent_size = 4
+indent_style = space
+max_line_length = 120
+csharp_indent_case_contents = true
+csharp_new_line_before_open_brace = all
+dotnet_separate_import_directive_groups = true
+dotnet_sort_system_directives_first = true
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+dotnet_naming_rule.types_and_namespaces_severity = warning
+dotnet_naming_rule.types_and_namespaces_style = pascal_case_style
+dotnet_naming_rule.types_and_namespaces_symbols = types_and_namespaces
+dotnet_naming_symbols.types_and_namespaces.applicable_kinds = namespace,class,struct,interface,enum
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+dotnet_naming_rule.local_variables_severity = warning
+dotnet_naming_rule.local_variables_style = camel_case_style
+dotnet_naming_rule.local_variables_symbols = local_variables
+dotnet_naming_symbols.local_variables.applicable_kinds = local
