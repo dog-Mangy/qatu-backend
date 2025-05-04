@@ -14,7 +14,7 @@ namespace Qatu.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Product?> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await _context.Products.FindAsync(id);
         }
@@ -24,7 +24,7 @@ namespace Qatu.Infrastructure.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetByStoreIdAsync(int storeId)
+        public async Task<IEnumerable<Product>> GetByStoreIdAsync(Guid storeId)
         {
             return await _context.Products
                 .Where(p => p.StoreId == storeId)
@@ -53,7 +53,7 @@ namespace Qatu.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var product = await _context.Products.FindAsync(id);
             if (product != null)
@@ -69,7 +69,7 @@ namespace Qatu.Infrastructure.Repositories
             return await _context.Products.CountAsync();
         }
 
-        public async Task<int> CountByStoreAsync(int storeId)
+        public async Task<int> CountByStoreAsync(Guid storeId)
         {
             return await _context.Products
                 .Where(p => p.StoreId == storeId)
@@ -85,7 +85,7 @@ namespace Qatu.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Product>> GetPagedByStoreAsync(int storeId, int page, int pageSize)
+        public async Task<List<Product>> GetPagedByStoreAsync(Guid storeId, int page, int pageSize)
         {
             return await _context.Products
                 .Where(p => p.StoreId == storeId)
