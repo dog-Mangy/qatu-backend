@@ -19,11 +19,22 @@ namespace Qatu.Infrastructure.Persistence
 
             base.OnModelCreating(modelBuilder);
 
+            var adminId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+            var sellerId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+            var buyerId = Guid.Parse("33333333-3333-3333-3333-333333333333");
+
+            var store1Id = Guid.Parse("44444444-4444-4444-4444-444444444444");
+            var store2Id = Guid.Parse("55555555-5555-5555-5555-555555555555");
+
+            var product1Id = Guid.Parse("66666666-6666-6666-6666-666666666666");
+            var product2Id = Guid.Parse("77777777-7777-7777-7777-777777777777");
+            var product3Id = Guid.Parse("88888888-8888-8888-8888-888888888888");
+
             // Seed Users
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
-                    Id = 1,
+                    Id = adminId,
                     Name = "Admin User",
                     Email = "admin@qatu.com",
                     Password = password,
@@ -32,7 +43,7 @@ namespace Qatu.Infrastructure.Persistence
                 },
                 new User
                 {
-                    Id = 2,
+                    Id = sellerId,
                     Name = "Seller User",
                     Email = "seller@qatu.com",
                     Password = password,
@@ -41,7 +52,7 @@ namespace Qatu.Infrastructure.Persistence
                 },
                 new User
                 {
-                    Id = 3,
+                    Id = buyerId,
                     Name = "Buyer User",
                     Email = "buyer@qatu.com",
                     Password = password,
@@ -54,16 +65,16 @@ namespace Qatu.Infrastructure.Persistence
             modelBuilder.Entity<Store>().HasData(
                 new Store
                 {
-                    Id = 1,
-                    UserId = 2,
+                    Id = store1Id,
+                    UserId = sellerId,
                     Name = "Tech Store",
                     Description = "Electronics and gadgets",
                     CreatedAt = DateTime.UtcNow
                 },
                 new Store
                 {
-                    Id = 2,
-                    UserId = 2,
+                    Id = store2Id,
+                    UserId = sellerId,
                     Name = "Fashion Store",
                     Description = "Clothing and accessories",
                     CreatedAt = DateTime.UtcNow
@@ -74,8 +85,8 @@ namespace Qatu.Infrastructure.Persistence
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
-                    Id = 1,
-                    StoreId = 1,
+                    Id = product1Id,
+                    StoreId = store1Id,
                     Name = "Smartphone",
                     Description = "Latest model smartphone",
                     Category = "Electronics",
@@ -86,8 +97,8 @@ namespace Qatu.Infrastructure.Persistence
                 },
                 new Product
                 {
-                    Id = 2,
-                    StoreId = 1,
+                    Id = product2Id,
+                    StoreId = store1Id,
                     Name = "Laptop",
                     Description = "High-performance laptop",
                     Category = "Electronics",
@@ -98,8 +109,8 @@ namespace Qatu.Infrastructure.Persistence
                 },
                 new Product
                 {
-                    Id = 3,
-                    StoreId = 2,
+                    Id = product3Id,
+                    StoreId = store2Id,
                     Name = "Jeans",
                     Description = "Blue denim jeans",
                     Category = "Clothing",
