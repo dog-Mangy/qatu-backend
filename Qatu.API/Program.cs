@@ -28,6 +28,14 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<RouteMiddleware>();
+app.UseMiddleware<CreateProductMiddleware>();
+app.UseMiddleware<NewPriceMiddleware>();
+app.UseMiddleware<NewStockMiddleware>();
+app.UseMiddleware<ProductListMiddleware>();
+
+
 app.MapControllers();
 
 app.Run();
