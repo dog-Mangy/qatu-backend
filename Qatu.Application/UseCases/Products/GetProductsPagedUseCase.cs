@@ -18,7 +18,7 @@ namespace Qatu.Application.UseCases.Products
         {
             _repository = repository;
         }
-        public async Task<PagedResult<ProductViewDto>> ExecuteAsync(int page, int pageSize, int? storeId = null)
+        public async Task<PagedResult<ProductViewDto>> ExecuteAsync(int page, int pageSize, Guid? storeId = null)
         {
             int totalProducts;
             List<Product> products;

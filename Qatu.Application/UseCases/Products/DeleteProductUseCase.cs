@@ -11,7 +11,7 @@ namespace Qatu.Application.UseCases.Products
             _repository = repository;
         }
 
-        public async Task<bool> ExecuteAsync(int id)
+        public async Task<bool> ExecuteAsync(Guid id)
         {
             var existingProduct = await _repository.GetByIdAsync(id);
             if (existingProduct == null) return false;

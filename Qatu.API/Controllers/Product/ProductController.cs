@@ -44,7 +44,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         var product = await _getProductById.ExecuteAsync(id);
         if (product == null) return NotFound();
@@ -66,9 +66,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto command)
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto dto)
     {
-        var product = await _createProduct.HandleAsync(command);
+        var product = await _createProduct.HandleAsync(dto);
 
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
@@ -83,14 +83,14 @@ public class ProductsController : ControllerBase
 
 
     [HttpGet("/api/stores/{storeId}/products")]
-    public async Task<IActionResult> GetByStoreId(int storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> GetByStoreId(Guid storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
         var result = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
         return Ok(result);
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var result = await _deleteProduct.ExecuteAsync(id);
         if (!result) return NotFound();

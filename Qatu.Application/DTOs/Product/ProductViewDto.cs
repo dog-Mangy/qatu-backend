@@ -2,8 +2,8 @@
 {
     public class ProductViewDto
     {
-        public int Id { get; set; }
-        public int StoreId { get; set; }
+        public Guid Id { get; set; }
+        public Guid StoreId { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
         public string Category { get; set; } = null!;

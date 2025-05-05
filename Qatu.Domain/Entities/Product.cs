@@ -5,10 +5,10 @@ namespace Qatu.Domain.Entities
 {
     public class Product
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Column("store_id")]
-        public int StoreId { get; set; }
+        public Guid StoreId { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
         public string Category { get; set; } = null!;
