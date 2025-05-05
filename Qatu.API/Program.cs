@@ -34,6 +34,7 @@ app.UseMiddleware<CreateProductMiddleware>();
 app.UseMiddleware<NewPriceMiddleware>();
 app.UseMiddleware<NewStockMiddleware>();
 app.UseMiddleware<ProductListMiddleware>();
+app.UseMiddleware<PaginationMiddleware>();
 
 
 app.MapControllers();
