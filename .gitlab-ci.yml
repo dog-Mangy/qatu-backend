@@ -1,0 +1,7 @@
+stages:
+  - backend_stage
+
+backend_job:
+  stage: backend_stage
+  script:
+    - echo "Hello World from Backend"
