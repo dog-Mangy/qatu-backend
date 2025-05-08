@@ -11,7 +11,9 @@ public class ProductsController : ControllerBase
     private readonly UpdateProductStockUseCase _updateStock;
     private readonly CreateProductUseCase _createProduct;
     private readonly CreateProductListUseCase _createProductList;
-    private readonly GetProductsByStoreIdUseCase _getProductsByStoreId;
+
+    private readonly UpdateProductUseCase _updateProduct;
+
     private readonly DeleteProductUseCase _deleteProduct;
     private readonly GetProductsPagedUseCase _getProductsPaged;
 
@@ -21,18 +23,18 @@ public class ProductsController : ControllerBase
     public ProductsController(GetProductByIdUseCase getProductById,
                               UpdateProductPriceUseCase updatePrice,
                               UpdateProductStockUseCase updateStock,
+                              UpdateProductUseCase updateProduct,
                               CreateProductUseCase createProduct,
                               CreateProductListUseCase createProductList,
-                              GetProductsByStoreIdUseCase getProductsByStoreId,
                               DeleteProductUseCase deleteProduct,
                               GetProductsPagedUseCase getProducstPaged)
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
         _updateStock = updateStock;
+        _updateProduct = updateProduct;
         _createProduct = createProduct;
         _createProductList = createProductList;
-        _getProductsByStoreId = getProductsByStoreId;
         _deleteProduct = deleteProduct;
         _getProductsPaged = getProducstPaged;
     }
@@ -49,6 +51,15 @@ public class ProductsController : ControllerBase
         var product = await _getProductById.ExecuteAsync(id);
         if (product == null) return NotFound();
         return Ok(product);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto dto)
+    {
+        var result = await _updateProduct.ExecuteAsync(dto);
+        if (!result) return NotFound();
+
+        return NoContent();
     }
 
     [HttpPut("update-price")]

@@ -1,0 +1,31 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Qatu.Application.DTOs.Product
+{
+    public class UpdateProductDto
+    {
+        [Required]                        
+        public Guid ProductId { get; set; }
+
+        [Required]
+        public Guid StoreId { get; set; }
+
+        [Required]
+        public string Name { get; set; } = null!;
+
+        [Required]  
+        public string? Description { get; set; }
+
+        [Required]  
+        public string Category { get; set; } = null!;
+
+        [Required]
+        public decimal Price { get; set; }
+
+        [Required]
+        public decimal Rating { get; set; }
+
+        [Required]
+        public int Stock { get; set; }
+    }
+}
