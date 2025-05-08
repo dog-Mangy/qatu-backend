@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<GetProductByIdUseCase>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<UpdateProductUseCase>();
 builder.Services.AddScoped<UpdateProductPriceUseCase>();
 builder.Services.AddScoped<UpdateProductStockUseCase>();
 builder.Services.AddScoped<GetProductsByStoreIdUseCase>();
@@ -35,6 +36,7 @@ app.UseMiddleware<NewPriceMiddleware>();
 app.UseMiddleware<NewStockMiddleware>();
 app.UseMiddleware<ProductListMiddleware>();
 app.UseMiddleware<PaginationMiddleware>();
+app.UseMiddleware<UpdateProductMiddleware>();
 
 
 app.MapControllers();
