@@ -64,7 +64,7 @@ namespace Qatu.Application.UseCases.Products
                 Page = page,
                 PageSize = pageSize,
                 HasNext = page < totalPages,
-                HasPrevious = page > 1 && totalPages > 1,
+                HasPrevious = page > 1 && totalPages >= 1,
                 NPages = totalPages,
                 NElements = totalProducts
             };
