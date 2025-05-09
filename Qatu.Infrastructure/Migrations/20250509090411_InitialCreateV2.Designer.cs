@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Qatu.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Qatu.Infrastructure.Persistence;
 namespace Qatu.Infrastructure.Migrations
 {
     [DbContext(typeof(QatuDbContext))]
-    partial class QatuDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250509090411_InitialCreateV2")]
+    partial class InitialCreateV2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
