@@ -42,13 +42,14 @@ public class ProductsController : ControllerBase
             [FromQuery] decimal? maxPrice,
             [FromQuery] decimal? minRating,
             [FromQuery] decimal? maxRating,
+            [FromQuery] string? name,
             [FromQuery] string? sortBy = "CreatedAt",
             [FromQuery] bool ascending = true,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10) 
+            [FromQuery] int pageSize = 10)
     {
         var result = await _getProducts.ExecuteAsync(
-            page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, ascending
+            page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, name, ascending
         );
         return Ok(result);
     }
@@ -110,13 +111,14 @@ public class ProductsController : ControllerBase
             [FromQuery] decimal? maxPrice,
             [FromQuery] decimal? minRating,
             [FromQuery] decimal? maxRating,
+            [FromQuery] string? name,
             [FromQuery] string? sortBy = "CreatedAt",
             [FromQuery] bool ascending = true,
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 10) 
     {
         var result = await _getProducts.ExecuteAsync(
-            page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, ascending, storeId
+            page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, name, ascending, storeId
         );
         return Ok(result);
     }

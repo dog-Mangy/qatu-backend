@@ -27,6 +27,7 @@ namespace Qatu.Application.UseCases.Products
             decimal? minRating = null,
             decimal? maxRating = null,
             string? sortBy = null,
+            string? name = null,
             bool ascending = true,
             Guid? storeId = null
         )
@@ -37,12 +38,12 @@ namespace Qatu.Application.UseCases.Products
             if (storeId.HasValue)
             {
                 totalProducts = await _repository.CountAsync(storeId.Value);
-                products = await _repository.GetPagedFilteredAndSortedAsync(category, minPrice, maxPrice, minRating, maxRating, sortBy, ascending, page, pageSize, storeId.Value);
+                products = await _repository.GetPagedFilteredAndSortedAsync(category, minPrice, maxPrice, minRating, maxRating, sortBy, name, ascending, page, pageSize, storeId.Value);
             }
             else
             {
                 totalProducts = await _repository.CountAsync();
-                products = await _repository.GetPagedFilteredAndSortedAsync(category, minPrice, maxPrice, minRating, maxRating, sortBy, ascending, page, pageSize);
+                products = await _repository.GetPagedFilteredAndSortedAsync(category, minPrice, maxPrice, minRating, maxRating, sortBy, name, ascending, page, pageSize);
             }
 
             var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
@@ -69,6 +70,5 @@ namespace Qatu.Application.UseCases.Products
                 NElements = totalProducts
             };
         }
-
     }
 }
