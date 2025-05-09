@@ -19,106 +19,51 @@ namespace Qatu.Infrastructure.Persistence
 
             base.OnModelCreating(modelBuilder);
 
+            // User IDs
             var adminId = Guid.Parse("11111111-1111-1111-1111-111111111111");
             var sellerId = Guid.Parse("22222222-2222-2222-2222-222222222222");
             var buyerId = Guid.Parse("33333333-3333-3333-3333-333333333333");
 
+            // Store IDs
             var store1Id = Guid.Parse("44444444-4444-4444-4444-444444444444");
             var store2Id = Guid.Parse("55555555-5555-5555-5555-555555555555");
-
-            var product1Id = Guid.Parse("66666666-6666-6666-6666-666666666666");
-            var product2Id = Guid.Parse("77777777-7777-7777-7777-777777777777");
-            var product3Id = Guid.Parse("88888888-8888-8888-8888-888888888888");
+            var store3Id = Guid.Parse("66666666-6666-6666-6666-666666666666");
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = adminId,
-                    Name = "Admin User",
-                    Email = "admin@qatu.com",
-                    Password = password,
-                    Role = UserRole.Admin,
-                    CreatedAt = DateTime.UtcNow
-                },
-                new User
-                {
-                    Id = sellerId,
-                    Name = "Seller User",
-                    Email = "seller@qatu.com",
-                    Password = password,
-                    Role = UserRole.Seller,
-                    CreatedAt = DateTime.UtcNow
-                },
-                new User
-                {
-                    Id = buyerId,
-                    Name = "Buyer User",
-                    Email = "buyer@qatu.com",
-                    Password = password,
-                    Role = UserRole.Buyer,
-                    CreatedAt = DateTime.UtcNow
-                }
+                new User { Id = adminId, Name = "Admin User", Email = "admin@qatu.com", Password = password, Role = UserRole.Admin, CreatedAt = DateTime.UtcNow },
+                new User { Id = sellerId, Name = "Seller User", Email = "seller@qatu.com", Password = password, Role = UserRole.Seller, CreatedAt = DateTime.UtcNow },
+                new User { Id = buyerId, Name = "Buyer User", Email = "buyer@qatu.com", Password = password, Role = UserRole.Buyer, CreatedAt = DateTime.UtcNow }
             );
 
             // Seed Stores
             modelBuilder.Entity<Store>().HasData(
-                new Store
-                {
-                    Id = store1Id,
-                    UserId = sellerId,
-                    Name = "Tech Store",
-                    Description = "Electronics and gadgets",
-                    CreatedAt = DateTime.UtcNow
-                },
-                new Store
-                {
-                    Id = store2Id,
-                    UserId = sellerId,
-                    Name = "Fashion Store",
-                    Description = "Clothing and accessories",
-                    CreatedAt = DateTime.UtcNow
-                }
+                new Store { Id = store1Id, UserId = sellerId, Name = "Tech Store", Description = "Electronics and gadgets", CreatedAt = DateTime.UtcNow },
+                new Store { Id = store2Id, UserId = sellerId, Name = "Fashion Store", Description = "Clothing and accessories", CreatedAt = DateTime.UtcNow },
+                new Store { Id = store3Id, UserId = sellerId, Name = "Home Store", Description = "Home essentials and furniture", CreatedAt = DateTime.UtcNow }
             );
 
-            // Seed Products
+            // Productos para cada tienda
             modelBuilder.Entity<Product>().HasData(
-                new Product
-                {
-                    Id = product1Id,
-                    StoreId = store1Id,
-                    Name = "Smartphone",
-                    Description = "Latest model smartphone",
-                    Category = "Electronics",
-                    Price = 699.99m,
-                    Rating = 4.5m,
-                    Stock = 50,
-                    CreatedAt = DateTime.UtcNow
-                },
-                new Product
-                {
-                    Id = product2Id,
-                    StoreId = store1Id,
-                    Name = "Laptop",
-                    Description = "High-performance laptop",
-                    Category = "Electronics",
-                    Price = 1299.99m,
-                    Rating = 4.8m,
-                    Stock = 20,
-                    CreatedAt = DateTime.UtcNow
-                },
-                new Product
-                {
-                    Id = product3Id,
-                    StoreId = store2Id,
-                    Name = "Jeans",
-                    Description = "Blue denim jeans",
-                    Category = "Clothing",
-                    Price = 49.99m,
-                    Rating = 4.2m,
-                    Stock = 100,
-                    CreatedAt = DateTime.UtcNow
-                }
+                // Tech Store
+                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Smartphone", Description = "Latest model smartphone", Category = "Electronics", Price = 699.99m, Rating = 4.5m, Stock = 50, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Laptop", Description = "High-performance laptop", Category = "Electronics", Price = 1299.99m, Rating = 4.8m, Stock = 20, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Tablet", Description = "Lightweight and portable", Category = "Electronics", Price = 499.99m, Rating = 4.3m, Stock = 30, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Smartwatch", Description = "Fitness tracker", Category = "Wearables", Price = 199.99m, Rating = 4.1m, Stock = 40, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Headphones", Description = "Noise-canceling headphones", Category = "Accessories", Price = 149.99m, Rating = 4.4m, Stock = 25, CreatedAt = DateTime.UtcNow },
+
+                // Fashion Store
+                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "Jeans", Description = "Blue denim jeans", Category = "Clothing", Price = 49.99m, Rating = 4.2m, Stock = 100, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "T-Shirt", Description = "100% Cotton T-shirt", Category = "Clothing", Price = 19.99m, Rating = 4.0m, Stock = 150, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "Jacket", Description = "Waterproof winter jacket", Category = "Clothing", Price = 99.99m, Rating = 4.3m, Stock = 60, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "Sneakers", Description = "Comfortable sneakers", Category = "Footwear", Price = 59.99m, Rating = 4.2m, Stock = 120, CreatedAt = DateTime.UtcNow },
+
+                // Home Store
+                new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Sofa", Description = "Modern 3-seater sofa", Category = "Furniture", Price = 899.99m, Rating = 4.6m, Stock = 10, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Dining Table", Description = "Solid wood dining table", Category = "Furniture", Price = 499.99m, Rating = 4.5m, Stock = 15, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Bed Frame", Description = "Queen size bed frame", Category = "Furniture", Price = 299.99m, Rating = 4.7m, Stock = 5, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Lamp", Description = "LED floor lamp", Category = "Home Decor", Price = 49.99m, Rating = 4.2m, Stock = 30, CreatedAt = DateTime.UtcNow },
+                new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Carpet", Description = "Soft area rug", Category = "Home Decor", Price = 99.99m, Rating = 4.3m, Stock = 20, CreatedAt = DateTime.UtcNow }
             );
         }
     }
