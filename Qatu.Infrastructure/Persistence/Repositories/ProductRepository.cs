@@ -69,27 +69,72 @@ namespace Qatu.Infrastructure.Repositories
             return await _context.Products.CountAsync();
         }
 
-        public async Task<int> CountByStoreAsync(Guid storeId)
+        public async Task<int> CountAsync(Guid? storeId = null)
         {
-            return await _context.Products
+            int result;
+            if (storeId.HasValue)
+            {
+                result = await _context.Products
                 .Where(p => p.StoreId == storeId)
                 .CountAsync();
+            } else
+            {
+                result = await _context.Products.CountAsync();
+            }
+            return result;
         }
 
-        public async Task<List<Product>> GetPagedAsync(int page, int pageSize)
+        public async Task<List<Product>> GetPagedFilteredAndSortedAsync(
+            string? category,
+            decimal? minPrice,
+            decimal? maxPrice,
+            decimal? minRating,
+            decimal? maxRating,
+            string? sortBy,
+            string? searchQuery,
+            bool ascending,
+            int page,
+            int pageSize,
+            Guid? storeId = null
+)
         {
-            return await _context.Products
-                .OrderByDescending(p => p.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
+            var query = _context.Products.AsQueryable();
 
-        public async Task<List<Product>> GetPagedByStoreAsync(Guid storeId, int page, int pageSize)
-        {
-            return await _context.Products
-                .Where(p => p.StoreId == storeId)
-                .OrderByDescending(p => p.Id)
+            if (storeId.HasValue)
+            {
+                query = query.Where(p => p.StoreId == storeId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(searchQuery))
+                query = query.Where(p => p.Name.Contains(searchQuery) || (p.Description ?? string.Empty).Contains(searchQuery));
+
+            if (!string.IsNullOrEmpty(category))
+                query = query.Where(p => p.Category == category);
+
+            if (minPrice.HasValue)
+                query = query.Where(p => p.Price >= minPrice.Value);
+
+            if (maxPrice.HasValue)
+                query = query.Where(p => p.Price <= maxPrice.Value);
+
+            if (minRating.HasValue)
+                query = query.Where(p => p.Rating >= minRating.Value);
+
+            if (maxRating.HasValue)
+                query = query.Where(p => p.Rating <= maxRating.Value);
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                query = ascending
+                    ? query.OrderBy(p => EF.Property<object>(p, sortBy))
+                    : query.OrderByDescending(p => EF.Property<object>(p, sortBy));
+            }
+            else
+            {
+                query = ascending ? query.OrderBy(p => p.Id) : query.OrderByDescending(p => p.Id);
+            }
+
+            return await query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

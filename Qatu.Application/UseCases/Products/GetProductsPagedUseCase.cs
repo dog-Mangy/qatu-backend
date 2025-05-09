@@ -10,31 +10,43 @@ using Qatu.Domain.Entities;
 
 namespace Qatu.Application.UseCases.Products
 {
-    public class GetProductsPagedUseCase
+    public class GetProductsUseCase
     {
         private readonly IProductRepository _repository;
 
-        public GetProductsPagedUseCase(IProductRepository repository)
+        public GetProductsUseCase(IProductRepository repository)
         {
             _repository = repository;
         }
-        public async Task<PagedResult<ProductViewDto>> ExecuteAsync(int page, int pageSize, Guid? storeId = null)
+        public async Task<PagedResult<ProductViewDto>> ExecuteAsync(
+            int page,
+            int pageSize,
+            string? category = null,
+            decimal? minPrice = null,
+            decimal? maxPrice = null,
+            decimal? minRating = null,
+            decimal? maxRating = null,
+            string? sortBy = null,
+            string? searchQuery = null,
+            bool ascending = true,
+            Guid? storeId = null
+        )
         {
             int totalProducts;
             List<Product> products;
 
             if (storeId.HasValue)
             {
-                totalProducts = await _repository.CountByStoreAsync(storeId.Value);
-                products = await _repository.GetPagedByStoreAsync(storeId.Value, page, pageSize);
+                totalProducts = await _repository.CountAsync(storeId.Value);
+                products = await _repository.GetPagedFilteredAndSortedAsync(category, minPrice, maxPrice, minRating, maxRating, sortBy, searchQuery, ascending, page, pageSize, storeId.Value);
             }
             else
             {
                 totalProducts = await _repository.CountAsync();
-                products = await _repository.GetPagedAsync(page, pageSize);
+                products = await _repository.GetPagedFilteredAndSortedAsync(category, minPrice, maxPrice, minRating, maxRating, sortBy, searchQuery, ascending, page, pageSize);
             }
 
-            var totalPages = (int) Math.Ceiling((double)totalProducts / pageSize);
+            var totalPages = (int)Math.Ceiling((double)totalProducts / pageSize);
 
             return new PagedResult<ProductViewDto>
             {
@@ -53,7 +65,7 @@ namespace Qatu.Application.UseCases.Products
                 Page = page,
                 PageSize = pageSize,
                 HasNext = page < totalPages,
-                HasPrevious = page>1 && totalPages>1,
+                HasPrevious = page > 1 && totalPages >= 1,
                 NPages = totalPages,
                 NElements = totalProducts
             };
