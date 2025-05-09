@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Qatu.Application.DTOs.Product;
 using Qatu.Application.UseCases.Products;
+using System.Globalization;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,14 +12,9 @@ public class ProductsController : ControllerBase
     private readonly UpdateProductStockUseCase _updateStock;
     private readonly CreateProductUseCase _createProduct;
     private readonly CreateProductListUseCase _createProductList;
-
     private readonly UpdateProductUseCase _updateProduct;
-
     private readonly DeleteProductUseCase _deleteProduct;
-    private readonly GetProductsPagedUseCase _getProductsPaged;
-
-
-
+    private readonly GetProductsUseCase _getProducts;
 
     public ProductsController(GetProductByIdUseCase getProductById,
                               UpdateProductPriceUseCase updatePrice,
@@ -27,7 +23,8 @@ public class ProductsController : ControllerBase
                               CreateProductUseCase createProduct,
                               CreateProductListUseCase createProductList,
                               DeleteProductUseCase deleteProduct,
-                              GetProductsPagedUseCase getProducstPaged)
+                              GetProductsUseCase getProducst
+                              )
     {
         _getProductById = getProductById;
         _updatePrice = updatePrice;
@@ -36,14 +33,26 @@ public class ProductsController : ControllerBase
         _createProduct = createProduct;
         _createProductList = createProductList;
         _deleteProduct = deleteProduct;
-        _getProductsPaged = getProducstPaged;
+        _getProducts = getProducst;
     }
     [HttpGet]
-    public async Task<IActionResult> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> GetProducts(
+            [FromQuery] string? category,
+            [FromQuery] decimal? minPrice,
+            [FromQuery] decimal? maxPrice,
+            [FromQuery] decimal? minRating,
+            [FromQuery] decimal? maxRating,
+            [FromQuery] string? sortBy = "CreatedAt",
+            [FromQuery] bool ascending = true,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10) 
     {
-        var result = await _getProductsPaged.ExecuteAsync(page, pageSize);
+        var result = await _getProducts.ExecuteAsync(
+            page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, ascending
+        );
         return Ok(result);
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
@@ -94,9 +103,21 @@ public class ProductsController : ControllerBase
 
 
     [HttpGet("/api/stores/{storeId}/products")]
-    public async Task<IActionResult> GetByStoreId(Guid storeId, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> GetByStoreId(
+            Guid storeId,
+            [FromQuery] string? category,
+            [FromQuery] decimal? minPrice,
+            [FromQuery] decimal? maxPrice,
+            [FromQuery] decimal? minRating,
+            [FromQuery] decimal? maxRating,
+            [FromQuery] string? sortBy = "CreatedAt",
+            [FromQuery] bool ascending = true,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10) 
     {
-        var result = await _getProductsPaged.ExecuteAsync(page, pageSize, storeId);
+        var result = await _getProducts.ExecuteAsync(
+            page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, ascending, storeId
+        );
         return Ok(result);
     }
 
