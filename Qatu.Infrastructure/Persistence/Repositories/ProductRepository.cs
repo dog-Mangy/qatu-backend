@@ -91,7 +91,7 @@ namespace Qatu.Infrastructure.Repositories
             decimal? minRating,
             decimal? maxRating,
             string? sortBy,
-            string? name,
+            string? searchQuery,
             bool ascending,
             int page,
             int pageSize,
@@ -105,8 +105,8 @@ namespace Qatu.Infrastructure.Repositories
                 query = query.Where(p => p.StoreId == storeId.Value);
             }
 
-            if (!string.IsNullOrEmpty(name))
-                query = query.Where(p => p.Name == name);
+            if (!string.IsNullOrEmpty(searchQuery))
+                query = query.Where(p => p.Name.Contains(searchQuery) || (p.Description ?? string.Empty).Contains(searchQuery));
 
             if (!string.IsNullOrEmpty(category))
                 query = query.Where(p => p.Category == category);

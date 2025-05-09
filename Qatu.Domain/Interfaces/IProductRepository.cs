@@ -19,7 +19,7 @@ namespace Qatu.Domain.Interfaces
             decimal? minRating,
             decimal? maxRating,
             string? sortBy,
-            string? name,
+            string? searchQuery,
             bool ascending,
             int page,
             int pageSize,
