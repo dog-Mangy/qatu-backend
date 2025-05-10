@@ -4,11 +4,11 @@ namespace Qatu.Domain.Interfaces
 {
     public interface IStoreRepository
     {
-        Task<Store?> GetByIdAsync(int id);
+        Task<Store?> GetByIdAsync(Guid id);
         Task<IEnumerable<Store>> GetAllAsync();
-        Task<IEnumerable<Store>> GetByUserIdAsync(int userId);
+        Task<IEnumerable<Store>> GetByUserIdAsync(Guid userId);
         Task AddAsync(Store store);
         Task UpdateAsync(Store store);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
     }
 }
