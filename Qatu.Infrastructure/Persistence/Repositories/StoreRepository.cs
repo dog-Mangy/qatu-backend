@@ -1,0 +1,61 @@
+using Qatu.Domain.Entities;
+using Qatu.Domain.Interfaces;
+using Qatu.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+
+namespace Qatu.Infrastructure.Repositories
+{
+    public class StoreRepository : IStoreRepository
+    {
+        private readonly QatuDbContext _context;
+
+        public StoreRepository(QatuDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Store?> GetByIdAsync(Guid id)
+        {
+            return await _context.Stores
+                .Include(s => s.Products)
+                .FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public async Task<IEnumerable<Store>> GetAllAsync()
+        {
+            return await _context.Stores
+                .Include(s => s.Products)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Store>> GetByUserIdAsync(Guid userId)
+        {
+            return await _context.Stores
+                .Where(s => s.UserId == userId)
+                .Include(s => s.Products)
+                .ToListAsync();
+        }
+
+        public async Task AddAsync(Store store)
+        {
+            await _context.Stores.AddAsync(store);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Store store)
+        {
+            _context.Stores.Update(store);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var store = await _context.Stores.FindAsync(id);
+            if (store != null)
+            {
+                _context.Stores.Remove(store);
+                await _context.SaveChangesAsync();
+            }
+        }
+    }
+}
