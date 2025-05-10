@@ -2,6 +2,7 @@
 using Qatu.Domain.Entities;
 using Qatu.Domain.Enums;
 
+
 namespace Qatu.Infrastructure.Persistence
 {
     public class QatuDbContext : DbContext
@@ -18,6 +19,12 @@ namespace Qatu.Infrastructure.Persistence
             string password = "password123";
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.StoreId).HasColumnName("store_id");
+            });
 
             // User IDs
             var adminId = Guid.Parse("11111111-1111-1111-1111-111111111111");
