@@ -3,11 +3,13 @@ using Qatu.Infrastructure.Persistence;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Repositories;
 using Qatu.Application.UseCases.Products;
+using Qatu.Application.UseCases.Stores;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<GetProductByIdUseCase>();
+//Product
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<GetProductByIdUseCase>();
 builder.Services.AddScoped<UpdateProductUseCase>();
 builder.Services.AddScoped<UpdateProductPriceUseCase>();
 builder.Services.AddScoped<UpdateProductStockUseCase>();
@@ -15,6 +17,15 @@ builder.Services.AddScoped<DeleteProductUseCase>();
 builder.Services.AddScoped<CreateProductUseCase>();
 builder.Services.AddScoped<CreateProductListUseCase>();
 builder.Services.AddScoped<GetProductsUseCase>();
+
+//Store
+builder.Services.AddScoped<IStoreRepository, StoreRepository>();
+builder.Services.AddScoped<CreateStoreUseCase>();
+builder.Services.AddScoped<GetStoreByIdUseCase>();
+builder.Services.AddScoped<UpdateStoreUseCase>();
+builder.Services.AddScoped<DeleteStoreUseCase>();
+
+
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
@@ -29,6 +40,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+// Product
 app.UseMiddleware<RouteMiddleware>();
 app.UseMiddleware<CreateProductMiddleware>();
 app.UseMiddleware<NewPriceMiddleware>();
@@ -36,6 +48,8 @@ app.UseMiddleware<NewStockMiddleware>();
 app.UseMiddleware<ProductListMiddleware>();
 app.UseMiddleware<PaginationMiddleware>();
 app.UseMiddleware<UpdateProductMiddleware>();
+
+
 
 
 app.MapControllers();
