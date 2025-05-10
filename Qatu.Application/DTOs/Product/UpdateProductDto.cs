@@ -4,9 +4,6 @@ namespace Qatu.Application.DTOs.Product
 {
     public class UpdateProductDto
     {
-        [Required]                        
-        public Guid ProductId { get; set; }
-
         [Required]
         public Guid StoreId { get; set; }
 
