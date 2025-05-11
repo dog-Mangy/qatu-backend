@@ -49,6 +49,11 @@ app.UseMiddleware<ProductListMiddleware>();
 app.UseMiddleware<PaginationMiddleware>();
 app.UseMiddleware<UpdateProductMiddleware>();
 
+// Store
+app.UseMiddleware<ValidateGuidMiddleware>();
+app.UseMiddleware<CreateStoreMiddleware>();
+app.UseMiddleware<UpdateStoreMiddleware>();
+
 
 
 
