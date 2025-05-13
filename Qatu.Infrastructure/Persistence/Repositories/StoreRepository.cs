@@ -17,14 +17,12 @@ namespace Qatu.Infrastructure.Repositories
         public async Task<Store?> GetByIdAsync(Guid id)
         {
             return await _context.Stores
-                .Include(s => s.Products)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<IEnumerable<Store>> GetAllAsync()
         {
             return await _context.Stores
-                .Include(s => s.Products)
                 .ToListAsync();
         }
 
@@ -32,7 +30,6 @@ namespace Qatu.Infrastructure.Repositories
         {
             return await _context.Stores
                 .Where(s => s.UserId == userId)
-                .Include(s => s.Products)
                 .ToListAsync();
         }
 
