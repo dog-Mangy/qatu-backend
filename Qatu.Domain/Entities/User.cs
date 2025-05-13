@@ -1,4 +1,4 @@
-﻿using Qatu.Domain.Enums;
+using Qatu.Domain.Enums;
 
 namespace Qatu.Domain.Entities
 {

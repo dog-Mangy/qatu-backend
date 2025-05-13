@@ -1,9 +1,9 @@
-﻿namespace Qatu.Domain.Entities
+namespace Qatu.Domain.Entities
 {
     public class Store
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public Guid UserId { get; set; }   
+        public Guid UserId { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

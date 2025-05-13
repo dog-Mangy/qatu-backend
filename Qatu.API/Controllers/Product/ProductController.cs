@@ -1,7 +1,9 @@
+using System.Globalization;
+
 using Microsoft.AspNetCore.Mvc;
+
 using Qatu.Application.DTOs.Product;
 using Qatu.Application.UseCases.Products;
-using System.Globalization;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -115,7 +117,7 @@ public class ProductsController : ControllerBase
             [FromQuery] string? sortBy = "CreatedAt",
             [FromQuery] bool ascending = true,
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10) 
+            [FromQuery] int pageSize = 10)
     {
         var result = await _getProducts.ExecuteAsync(
             page, pageSize, category, minPrice, maxPrice, minRating, maxRating, sortBy, searchQuery, ascending, storeId
@@ -129,6 +131,6 @@ public class ProductsController : ControllerBase
         var result = await _deleteProduct.ExecuteAsync(id);
         if (!result) return NotFound();
 
-        return NoContent(); 
+        return NoContent();
     }
 }

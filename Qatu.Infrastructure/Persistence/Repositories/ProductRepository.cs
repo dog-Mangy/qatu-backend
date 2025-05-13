@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+
 using Qatu.Domain.Entities;
 using Qatu.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Qatu.Infrastructure.Persistence;
 
 namespace Qatu.Infrastructure.Repositories
@@ -77,7 +78,8 @@ namespace Qatu.Infrastructure.Repositories
                 result = await _context.Products
                 .Where(p => p.StoreId == storeId)
                 .CountAsync();
-            } else
+            }
+            else
             {
                 result = await _context.Products.CountAsync();
             }

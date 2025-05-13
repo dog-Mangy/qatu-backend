@@ -1,4 +1,4 @@
-﻿namespace Qatu.Domain.Enums
+namespace Qatu.Domain.Enums
 {
     public enum UserRole
     {

@@ -12,15 +12,15 @@ public class ProductListMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path.StartsWithSegments("/api/products/bulk") && 
+        if (context.Request.Path.StartsWithSegments("/api/products/bulk") &&
             context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
         {
             context.Request.EnableBuffering();
 
             using var reader = new StreamReader(
-                context.Request.Body, 
-                encoding: Encoding.UTF8, 
-                detectEncodingFromByteOrderMarks: false, 
+                context.Request.Body,
+                encoding: Encoding.UTF8,
+                detectEncodingFromByteOrderMarks: false,
                 leaveOpen: true
             );
 
@@ -52,6 +52,6 @@ public class ProductListMiddleware
             }
         }
 
-        await _next(context); 
+        await _next(context);
     }
 }
