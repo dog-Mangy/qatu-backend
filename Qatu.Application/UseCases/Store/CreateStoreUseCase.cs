@@ -1,5 +1,5 @@
-using Qatu.Domain.Entities;
 using Qatu.Application.DTOs.Store;
+using Qatu.Domain.Entities;
 using Qatu.Domain.Interfaces;
 
 namespace Qatu.Application.UseCases.Stores

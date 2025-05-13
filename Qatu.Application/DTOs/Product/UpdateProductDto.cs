@@ -10,10 +10,10 @@ namespace Qatu.Application.DTOs.Product
         [Required]
         public string Name { get; set; } = null!;
 
-        [Required]  
+        [Required]
         public string? Description { get; set; }
 
-        [Required]  
+        [Required]
         public string Category { get; set; } = null!;
 
         [Required]

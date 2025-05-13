@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 
@@ -17,7 +17,7 @@ namespace Qatu.Domain.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [JsonIgnore] 
+        [JsonIgnore]
         public Store Store { get; set; } = null!;
     }
 }

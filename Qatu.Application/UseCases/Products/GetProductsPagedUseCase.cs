@@ -1,12 +1,13 @@
-﻿using Qatu.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Qatu.Domain.Interfaces;
+
+using Qatu.Application.DTOs;
 using Qatu.Application.DTOs.Product;
 using Qatu.Domain.Entities;
+using Qatu.Domain.Interfaces;
 
 namespace Qatu.Application.UseCases.Products
 {

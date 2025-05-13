@@ -1,6 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 using System.Net;
+
+using Microsoft.EntityFrameworkCore;
+
+using MySqlConnector;
 
 public class UpdateProductMiddleware
 {
@@ -19,7 +21,7 @@ public class UpdateProductMiddleware
         }
         catch (DbUpdateException dbEx) when (dbEx.InnerException is MySqlException mysqlEx)
         {
-            if (mysqlEx.Number == 1452) 
+            if (mysqlEx.Number == 1452)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 context.Response.ContentType = "application/json";
