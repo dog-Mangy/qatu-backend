@@ -1,4 +1,4 @@
-﻿namespace Qatu.Application.DTOs.Product
+namespace Qatu.Application.DTOs.Product
 {
     public class ProductViewDto
     {

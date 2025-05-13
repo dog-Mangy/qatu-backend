@@ -1,5 +1,5 @@
-using Qatu.Domain.Interfaces;
 using Qatu.Application.DTOs.Product;
+using Qatu.Domain.Interfaces;
 
 namespace Qatu.Application.UseCases.Products
 {

@@ -1,4 +1,4 @@
-﻿using Qatu.Domain.Entities;
+using Qatu.Domain.Entities;
 
 namespace Qatu.Domain.Interfaces
 {

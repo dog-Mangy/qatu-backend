@@ -15,7 +15,7 @@ namespace Qatu.Application.UseCases.Stores
 
         public async Task<Store?> HandleAsync(Guid storeId, UpdateStoreDto command)
         {
-            var store = await _repository.GetByIdAsync(storeId); 
+            var store = await _repository.GetByIdAsync(storeId);
 
             if (store == null)
             {

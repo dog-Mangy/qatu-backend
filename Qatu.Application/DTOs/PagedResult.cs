@@ -1,4 +1,4 @@
-﻿namespace Qatu.Application.DTOs
+namespace Qatu.Application.DTOs
 {
     public class PagedResult<T>
     {
