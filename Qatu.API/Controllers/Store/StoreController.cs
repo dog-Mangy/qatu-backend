@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+
 using Qatu.Application.DTOs.Store;
 using Qatu.Application.UseCases.Stores;
 
@@ -57,6 +58,6 @@ public class StoresController : ControllerBase
         if (!deleted)
             return NotFound();
 
-        return NoContent(); 
+        return NoContent();
     }
 }

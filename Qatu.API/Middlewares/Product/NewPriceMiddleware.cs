@@ -52,7 +52,7 @@ public class NewPriceMiddleware
                     return;
                 }
 
-                var price = priceProp.GetDecimal(); 
+                var price = priceProp.GetDecimal();
                 if (price <= 0)
                 {
                     context.Response.StatusCode = StatusCodes.Status400BadRequest;
