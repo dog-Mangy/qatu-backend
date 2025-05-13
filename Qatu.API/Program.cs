@@ -36,7 +36,20 @@ builder.Services.AddDbContext<QatuDbContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+    Console.WriteLine("Swagger UI is available at: http://localhost:5028/swagger/index.html");
+}
 
 app.UseHttpsRedirection();
 
