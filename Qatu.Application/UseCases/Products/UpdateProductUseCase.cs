@@ -12,9 +12,9 @@ namespace Qatu.Application.UseCases.Products
             _repository = repository;
         }
 
-        public async Task<bool> ExecuteAsync(UpdateProductDto command)
+        public async Task<bool> ExecuteAsync(Guid productId, UpdateProductDto command)
         {
-            var product = await _repository.GetByIdAsync(command.ProductId);
+            var product = await _repository.GetByIdAsync(productId);
             if (product == null)
                 return false;
 
