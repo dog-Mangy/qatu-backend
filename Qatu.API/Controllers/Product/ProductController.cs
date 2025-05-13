@@ -66,7 +66,7 @@ public class ProductsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto dto)
     {
-        var result = await _updateProduct.ExecuteAsync(dto);
+        var result = await _updateProduct.ExecuteAsync(id, dto);
         if (!result) return NotFound();
 
         return NoContent();

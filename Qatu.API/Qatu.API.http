@@ -1,12 +1,37 @@
 @baseUrl = http://localhost:5028/api
 @products = /products
+@IDproduct = /d9112846-d97d-4395-8e37-f855759aa650
 
+@stores = /stores
+
+@IDstore = /44444444-4444-4444-4444-444444444444
+
+GET  {{baseUrl}}{{products}}
+
+### 
+GET {{baseUrl}}{{products}}{{IDproduct}}
+
+###
+PUT {{baseUrl}}{{products}}{{IDproduct}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "storeId": "44444444-4444-4444-4444-444444444444",
+  "name": "Nuevo Producto 2",
+  "description": "Descripción actualizada",
+  "category": "Tecnología",
+  "price": 199.99
+}
+
+
+###
 POST  {{baseUrl}}{{products}}
 Accept: application/json
 Content-Type: application/json
 
 {
-  "StoreId": 1,
+  "StoreId": "44444444-4444-4444-4444-444444444444",
   "Name": "toy box",
   "Description": "Toy box for children aged 9 to 10.",
   "Category": "toys for children",
@@ -23,7 +48,7 @@ Content-Type: application/json
 {
   "products": [
     {
-      "storeId": 1,
+      "storeId": "44444444-4444-4444-4444-444444444444",
       "name": "Lego Creator",
       "description": "Building toy set",
       "category": "Toys",
@@ -31,15 +56,17 @@ Content-Type: application/json
       "stock": 15
     },
     {
-      "storeId": 1,
+      "storeId": "44444444-4444-4444-4444-444444444444",
       "name": "Color Pencils Pack",
       "description": "Pack of 24 colored pencils",
       "category": "Stationery",
-      "price": 5.49
+      "price": 5.49,
+      "stock": 10
     },
     {
-      "storeId": 1,
+      "storeId": "44444444-4444-4444-4444-444444444444",
       "name": "RC Car",
+      "description": "Pack of 24 colored pencils",
       "category": "Electronics",
       "price": 45.00,
       "stock": 10
@@ -48,3 +75,35 @@ Content-Type: application/json
 }
 
 ###
+DELETE {{baseUrl}}{{products}}{{IDproduct}}
+
+
+## Store
+
+###
+GET {{baseUrl}}{{stores}}{{IDstore}}
+
+###
+POST {{baseUrl}}{{stores}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "UserId": "22222222-2222-2222-2222-222222222222",
+  "Name": "toy box",
+  "Description": "Toy box for children aged 9 to 10."
+}
+
+###
+PUT {{baseUrl}}{{stores}}{{IDstore}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "Name": "toy box 333",
+  "Description": "Toy box for adult aged 9 to 10."
+}
+
+
+###
+DELETE {{baseUrl}}{{stores}}/66666666-6666-6666-6666-666666666666

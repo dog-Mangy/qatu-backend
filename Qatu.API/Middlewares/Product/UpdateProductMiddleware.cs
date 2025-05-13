@@ -23,7 +23,7 @@ public class UpdateProductMiddleware
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 context.Response.ContentType = "application/json";
-                var error = new { error = "StoreId does not exist or is invalid." };
+                var error = new { error = "StoreId or UserId does not exist or is invalid." };
                 await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(error));
             }
             else
