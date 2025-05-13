@@ -1,4 +1,4 @@
-using Qatu.Domain.Entities;
+using Qatu.Application.DTOs.Store;
 using Qatu.Domain.Interfaces;
 
 namespace Qatu.Application.UseCases.Stores
@@ -12,9 +12,22 @@ namespace Qatu.Application.UseCases.Stores
             _repository = repository;
         }
 
-        public async Task<Store?> ExecuteAsync(Guid storeId)
+        public async Task<GetStoreDto?> ExecuteAsync(Guid storeId)
         {
-            return await _repository.GetByIdAsync(storeId);
+            var store = await _repository.GetByIdAsync(storeId);
+
+            if (store == null)
+                return null;
+
+            return new GetStoreDto
+            {
+                Id = store.Id,
+                UserId = store.UserId,
+                Name = store.Name,
+                Description = store.Description,
+                CreatedAt = store.CreatedAt
+            };
         }
     }
+
 }
