@@ -53,8 +53,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseSwaggerUI(o => o.SwaggerEndpoint("/openapi/v1.json", "Swagger Demo"));
-
 // Product
 app.UseMiddleware<RouteMiddleware>();
 app.UseMiddleware<CreateProductMiddleware>();
