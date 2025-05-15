@@ -24,14 +24,7 @@ public class ValidateGuidMiddleware
                 await context.Response.WriteAsync("The ID is missing from the route.");
                 return;
             }
-
-            var idSegment = segments.Last();
-            if (!Guid.TryParse(idSegment, out _))
-            {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsync("The provided ID is not valid.");
-                return;
-            }
+            
         }
 
         await _next(context);
