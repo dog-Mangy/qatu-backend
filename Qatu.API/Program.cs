@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
+using Qatu.Application.UseCases.Categories;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Stores;
 using Qatu.Domain.Interfaces;
@@ -26,6 +27,12 @@ builder.Services.AddScoped<GetStoreByIdUseCase>();
 builder.Services.AddScoped<UpdateStoreUseCase>();
 builder.Services.AddScoped<DeleteStoreUseCase>();
 
+//Category
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<CreateCategoryUseCase>();
+builder.Services.AddScoped<GetCategoryByIdUseCase>();
+builder.Services.AddScoped<UpdateCategoryUseCase>();
+builder.Services.AddScoped<DeleteCategoryUseCase>();
 
 
 
@@ -68,6 +75,8 @@ app.UseMiddleware<ValidateGuidMiddleware>();
 app.UseMiddleware<CreateStoreMiddleware>();
 app.UseMiddleware<UpdateStoreMiddleware>();
 
+//Category
+app.UseMiddleware<RequireIdMiddleware>();
 
 
 
