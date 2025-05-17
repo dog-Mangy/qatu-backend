@@ -11,7 +11,7 @@ namespace Qatu.Application.UseCases.Categories
         {
             _repository = repository;
         }
-        
+
         public async Task<GetCategoryDto?> ExecuteAsync(Guid storeId)
         {
             var category = await _repository.GetByIdAsync(storeId);

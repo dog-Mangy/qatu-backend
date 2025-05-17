@@ -14,7 +14,7 @@ namespace Qatu.Application.DTOs.Product
         public string? Description { get; set; }
 
         [Required]
-        public Guid CategoryId { get; set; } 
+        public Guid CategoryId { get; set; }
 
         [Required]
         public decimal Price { get; set; }

@@ -22,7 +22,7 @@ namespace Qatu.Application.UseCases.Categories
                 Description = command.Description,
                 ImageUrl = command.ImageUrl
             };
-            
+
 
             await _repository.AddAsync(category);
 

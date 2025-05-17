@@ -24,7 +24,7 @@ namespace Qatu.Infrastructure.Persistence
 
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Category)
-            .WithMany() 
+            .WithMany()
             .HasForeignKey(p => p.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -65,7 +65,7 @@ namespace Qatu.Infrastructure.Persistence
                 new Store { Id = store3Id, UserId = sellerId, Name = "Home Store", Description = "Home essentials and furniture", CreatedAt = DateTime.UtcNow }
             );
 
-            
+
             // Seed Categorys
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = electronicsCategoryId, Name = "Electronics", CreatedAt = DateTime.UtcNow },

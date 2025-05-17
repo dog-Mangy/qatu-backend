@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 using Qatu.Domain.Entities;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
