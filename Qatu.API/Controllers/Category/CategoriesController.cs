@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Qatu.Application.DTOs.Category;
@@ -10,6 +11,7 @@ namespace Qatu.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly CreateCategoryUseCase _createCategory;
+        private readonly GetAllCategoriesUseCase _getAllCategoriesUseCase;
         private readonly GetCategoryByIdUseCase _getCategoryById;
         private readonly UpdateCategoryUseCase _updateCategory;
         private readonly DeleteCategoryUseCase _deleteCategory;
@@ -17,16 +19,29 @@ namespace Qatu.API.Controllers
         public CategoriesController(
             CreateCategoryUseCase createCategory,
             GetCategoryByIdUseCase getCategoryById,
+            GetAllCategoriesUseCase getAllCategoriesUseCase,
             UpdateCategoryUseCase updateCategory,
             DeleteCategoryUseCase deleteCategory)
         {
             _createCategory = createCategory;
+            _getAllCategoriesUseCase = getAllCategoriesUseCase;
             _getCategoryById = getCategoryById;
             _updateCategory = updateCategory;
             _deleteCategory = deleteCategory;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll(Guid id)
+        {
+            var category = await _getAllCategoriesUseCase.ExecuteAsync();
+            if (category == null)
+                return NotFound();
+
+            return Ok(category);
+        }
+
         [HttpGet("{id}")]
+        [Authorize(Policy = "UserOnly")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var category = await _getCategoryById.ExecuteAsync(id);

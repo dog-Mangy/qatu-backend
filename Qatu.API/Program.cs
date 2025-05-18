@@ -1,4 +1,8 @@
+using System.Security.Claims;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 using Qatu.Application.UseCases.Categories;
 using Qatu.Application.UseCases.Products;
@@ -6,6 +10,7 @@ using Qatu.Application.UseCases.Stores;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +38,7 @@ builder.Services.AddScoped<CreateCategoryUseCase>();
 builder.Services.AddScoped<GetCategoryByIdUseCase>();
 builder.Services.AddScoped<UpdateCategoryUseCase>();
 builder.Services.AddScoped<DeleteCategoryUseCase>();
+builder.Services.AddScoped<GetAllCategoriesUseCase>();
 
 
 
@@ -43,6 +49,41 @@ builder.Services.AddDbContext<QatuDbContext>(options =>
 );
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://dev-a8y38ts0ji0zxod3.us.auth0.com/";
+        options.Audience = "https://qatu.api";
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = ClaimTypes.Name,
+            RoleClaimType = "https://qatu.api/roles"
+        };
+    });
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("VendorOnly", policy => policy.RequireRole("Vendor"));
+    options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+});
+
+
+// Habilitar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
@@ -61,6 +102,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowFrontend");
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+
 // Product
 app.UseMiddleware<RouteMiddleware>();
 app.UseMiddleware<CreateProductMiddleware>();
@@ -76,7 +123,6 @@ app.UseMiddleware<CreateStoreMiddleware>();
 app.UseMiddleware<UpdateStoreMiddleware>();
 
 //Category
-app.UseMiddleware<RequireIdMiddleware>();
 
 
 
