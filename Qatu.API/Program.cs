@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Stores;
@@ -7,6 +9,42 @@ using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var domain = builder.Configuration["Auth0:Domain"];
+var audience = builder.Configuration["Auth0:Audience"];
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = $"https://{domain}/";
+    options.Audience = audience;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = $"https://{domain}/",
+        ValidAudience = audience
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim("https://qatu.api/roles", "Admin"));
+
+    options.AddPolicy("VendorPolicy", policy =>
+        policy.RequireClaim("https://qatu.api/roles", "Vendor"));
+
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireClaim("https://qatu.api/roles", "User"));
+});
+
 
 //Product
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -53,6 +91,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Product
 app.UseMiddleware<RouteMiddleware>();

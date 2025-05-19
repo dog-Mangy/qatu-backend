@@ -1,5 +1,6 @@
 using System.Globalization;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Qatu.Application.DTOs.Product;
@@ -66,12 +67,24 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "VendorPolicy")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto dto)
     {
-        var result = await _updateProduct.ExecuteAsync(id, dto);
-        if (!result) return NotFound();
+        var product = await _getProductById.ExecuteAsync(id);
 
-        return NoContent();
+        if (product == null) return NotFound();
+
+        var userId = User.Claims.FirstOrDefault(c => c.Type == "https://qatu.api/uuid")?.Value;
+
+        var ownerID = product.Store.User.Id.ToString();
+
+        if (ownerID != userId)
+        {
+            return Forbid("You are not the owner of the product");
+        }
+
+        var result = await _updateProduct.ExecuteAsync(id, dto);
+        return result ? NoContent() : NotFound();
     }
 
     [HttpPut("update-price")]
@@ -89,6 +102,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto dto)
     {
         var product = await _createProduct.HandleAsync(dto);
