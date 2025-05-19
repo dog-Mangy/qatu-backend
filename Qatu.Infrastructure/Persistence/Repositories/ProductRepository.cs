@@ -111,7 +111,7 @@ namespace Qatu.Infrastructure.Repositories
                 query = query.Where(p => p.Name.Contains(searchQuery) || (p.Description ?? string.Empty).Contains(searchQuery));
 
             if (!string.IsNullOrEmpty(category))
-                query = query.Where(p => p.Category == category);
+                query = query.Where(p => p.Category.Name == category);
 
             if (minPrice.HasValue)
                 query = query.Where(p => p.Price >= minPrice.Value);

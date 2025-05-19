@@ -6,7 +6,7 @@ namespace Qatu.Application.DTOs.Product
         public Guid StoreId { get; set; }
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
-        public string Category { get; set; } = null!;
+        public Guid CategoryId { get; set; }
         public decimal Price { get; set; }
         public decimal Rating { get; set; }
         public int Stock { get; set; }
