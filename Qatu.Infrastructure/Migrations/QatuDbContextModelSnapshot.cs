@@ -22,15 +22,72 @@ namespace Qatu.Infrastructure.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("Qatu.Domain.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(92),
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            Id = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(96),
+                            Name = "Clothing"
+                        },
+                        new
+                        {
+                            Id = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(99),
+                            Name = "Furniture"
+                        },
+                        new
+                        {
+                            Id = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(112),
+                            Name = "Home Decor"
+                        });
+                });
+
             modelBuilder.Entity("Qatu.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)")
@@ -58,6 +115,8 @@ namespace Qatu.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("StoreId");
 
                     b.ToTable("Products");
@@ -65,9 +124,9 @@ namespace Qatu.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d9112846-d97d-4395-8e37-f855759aa650"),
-                            Category = "Electronics",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3927),
+                            Id = new Guid("5f17ddda-483c-4b81-9dee-6de3b9342747"),
+                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(195),
                             Description = "Latest model smartphone",
                             Name = "Smartphone",
                             Price = 699.99m,
@@ -77,9 +136,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6883ab22-dca9-4f24-b96a-7a926f0a8cf5"),
-                            Category = "Electronics",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3936),
+                            Id = new Guid("b4e7388f-f74f-47e1-bb42-4f7c4759766d"),
+                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(203),
                             Description = "High-performance laptop",
                             Name = "Laptop",
                             Price = 1299.99m,
@@ -89,9 +148,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0a262832-a2ca-4540-ae62-4ee9f458c8e9"),
-                            Category = "Electronics",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3941),
+                            Id = new Guid("3ff0c395-1892-4eb3-a573-0661ffb37ad6"),
+                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(209),
                             Description = "Lightweight and portable",
                             Name = "Tablet",
                             Price = 499.99m,
@@ -101,9 +160,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("daa9f12e-1db2-4a53-a159-3f520bb6eafb"),
-                            Category = "Wearables",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3944),
+                            Id = new Guid("f14bc0be-de1a-4a27-ad13-f53a7f96180a"),
+                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(221),
                             Description = "Fitness tracker",
                             Name = "Smartwatch",
                             Price = 199.99m,
@@ -113,9 +172,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e09bb8f2-834f-4572-a3d4-596d66930f62"),
-                            Category = "Accessories",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3946),
+                            Id = new Guid("23135ee0-0217-40b1-abb7-e19c75746ecc"),
+                            CategoryId = new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(228),
                             Description = "Noise-canceling headphones",
                             Name = "Headphones",
                             Price = 149.99m,
@@ -125,9 +184,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("eb8183f3-3193-43f4-a5a6-6ee4b7dd9588"),
-                            Category = "Clothing",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3949),
+                            Id = new Guid("15be7ced-dd02-422f-ba45-5385c3ed8f09"),
+                            CategoryId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(235),
                             Description = "Blue denim jeans",
                             Name = "Jeans",
                             Price = 49.99m,
@@ -137,9 +196,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("eb560c7a-2d62-443d-97b5-117ae42c73f0"),
-                            Category = "Clothing",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3953),
+                            Id = new Guid("f67e90be-a7b8-4b34-aefa-e597d3f5acb5"),
+                            CategoryId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(240),
                             Description = "100% Cotton T-shirt",
                             Name = "T-Shirt",
                             Price = 19.99m,
@@ -149,9 +208,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7feb748a-1e09-4f40-a0a9-cbcd9d69bc65"),
-                            Category = "Clothing",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3956),
+                            Id = new Guid("bfc2820e-6217-4853-8ac7-f4b436e8a833"),
+                            CategoryId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(251),
                             Description = "Waterproof winter jacket",
                             Name = "Jacket",
                             Price = 99.99m,
@@ -161,9 +220,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1ba43fc4-44ea-40d6-83b6-df9bdec60137"),
-                            Category = "Footwear",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3958),
+                            Id = new Guid("105a1d77-03ed-4ef9-8312-bf89136721ad"),
+                            CategoryId = new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(257),
                             Description = "Comfortable sneakers",
                             Name = "Sneakers",
                             Price = 59.99m,
@@ -173,9 +232,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("46af3683-63e8-4834-8af4-0d95d118dbff"),
-                            Category = "Furniture",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3961),
+                            Id = new Guid("2563b643-5835-48d8-b4f9-ca588b4fb8d5"),
+                            CategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(263),
                             Description = "Modern 3-seater sofa",
                             Name = "Sofa",
                             Price = 899.99m,
@@ -185,9 +244,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dafd71a8-2a0c-4816-bfad-dc08a0acba16"),
-                            Category = "Furniture",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3965),
+                            Id = new Guid("14fb7bdd-1f50-40db-b4b9-266446ac424f"),
+                            CategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(273),
                             Description = "Solid wood dining table",
                             Name = "Dining Table",
                             Price = 499.99m,
@@ -197,9 +256,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7a596c9e-2ae1-4d62-9d44-aecebcf36c80"),
-                            Category = "Furniture",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3968),
+                            Id = new Guid("69b30357-5134-4627-8f41-9c35e0ca4d53"),
+                            CategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(292),
                             Description = "Queen size bed frame",
                             Name = "Bed Frame",
                             Price = 299.99m,
@@ -209,9 +268,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7ff0c73f-d54a-451f-ab91-5ef88b6d931a"),
-                            Category = "Home Decor",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3970),
+                            Id = new Guid("2ebe7491-a964-4c0a-a556-7e9dfd886f0a"),
+                            CategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(303),
                             Description = "LED floor lamp",
                             Name = "Lamp",
                             Price = 49.99m,
@@ -221,9 +280,9 @@ namespace Qatu.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7066cd87-5f16-4def-ab73-a08db351afda"),
-                            Category = "Home Decor",
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3973),
+                            Id = new Guid("7afe8ce7-63cf-40db-8e0d-3c0a9eabe610"),
+                            CategoryId = new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 837, DateTimeKind.Utc).AddTicks(314),
                             Description = "Soft area rug",
                             Name = "Carpet",
                             Price = 99.99m,
@@ -262,7 +321,7 @@ namespace Qatu.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("44444444-4444-4444-4444-444444444444"),
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3898),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 836, DateTimeKind.Utc).AddTicks(9960),
                             Description = "Electronics and gadgets",
                             Name = "Tech Store",
                             UserId = new Guid("22222222-2222-2222-2222-222222222222")
@@ -270,7 +329,7 @@ namespace Qatu.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("55555555-5555-5555-5555-555555555555"),
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3900),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 836, DateTimeKind.Utc).AddTicks(9970),
                             Description = "Clothing and accessories",
                             Name = "Fashion Store",
                             UserId = new Guid("22222222-2222-2222-2222-222222222222")
@@ -278,7 +337,7 @@ namespace Qatu.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("66666666-6666-6666-6666-666666666666"),
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3902),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 836, DateTimeKind.Utc).AddTicks(9977),
                             Description = "Home essentials and furniture",
                             Name = "Home Store",
                             UserId = new Guid("22222222-2222-2222-2222-222222222222")
@@ -317,7 +376,7 @@ namespace Qatu.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3756),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 836, DateTimeKind.Utc).AddTicks(9280),
                             Email = "admin@qatu.com",
                             Name = "Admin User",
                             Password = "password123",
@@ -326,7 +385,7 @@ namespace Qatu.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3758),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 836, DateTimeKind.Utc).AddTicks(9329),
                             Email = "seller@qatu.com",
                             Name = "Seller User",
                             Password = "password123",
@@ -335,7 +394,7 @@ namespace Qatu.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("33333333-3333-3333-3333-333333333333"),
-                            CreatedAt = new DateTime(2025, 5, 9, 9, 4, 10, 850, DateTimeKind.Utc).AddTicks(3777),
+                            CreatedAt = new DateTime(2025, 5, 16, 20, 18, 21, 836, DateTimeKind.Utc).AddTicks(9334),
                             Email = "buyer@qatu.com",
                             Name = "Buyer User",
                             Password = "password123",
@@ -343,13 +402,28 @@ namespace Qatu.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Qatu.Domain.Entities.Category", b =>
+                {
+                    b.HasOne("Qatu.Domain.Entities.Category", null)
+                        .WithMany("SubCategories")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("Qatu.Domain.Entities.Product", b =>
                 {
+                    b.HasOne("Qatu.Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Qatu.Domain.Entities.Store", "Store")
                         .WithMany("Products")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Store");
                 });
@@ -363,6 +437,11 @@ namespace Qatu.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Qatu.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("Qatu.Domain.Entities.Store", b =>

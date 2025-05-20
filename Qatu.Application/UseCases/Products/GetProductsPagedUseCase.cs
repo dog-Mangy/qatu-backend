@@ -57,7 +57,7 @@ namespace Qatu.Application.UseCases.Products
                     StoreId = p.StoreId,
                     Name = p.Name,
                     Description = p.Description,
-                    Category = p.Category,
+                    CategoryId = p.CategoryId,
                     Price = p.Price,
                     Rating = p.Rating,
                     Stock = p.Stock,
