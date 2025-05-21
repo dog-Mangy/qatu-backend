@@ -74,15 +74,6 @@ public class ProductsController : ControllerBase
 
         if (product == null) return NotFound();
 
-        var userId = User.Claims.FirstOrDefault(c => c.Type == "https://qatu.api/uuid")?.Value;
-
-        var ownerID = product.Store.User.Id.ToString();
-
-        if (ownerID != userId)
-        {
-            return Forbid("You are not the owner of the product");
-        }
-
         var result = await _updateProduct.ExecuteAsync(id, dto);
         return result ? NoContent() : NotFound();
     }

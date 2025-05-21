@@ -36,13 +36,13 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminPolicy", policy =>
-        policy.RequireClaim("https://qatu.api/roles", "Admin"));
+        policy.RequireClaim($"{audience}/roles", "Admin"));
 
     options.AddPolicy("VendorPolicy", policy =>
-        policy.RequireClaim("https://qatu.api/roles", "Vendor"));
+        policy.RequireClaim($"{audience}/roles", "Vendor"));
 
     options.AddPolicy("UserPolicy", policy =>
-        policy.RequireClaim("https://qatu.api/roles", "User"));
+        policy.RequireClaim($"{audience}/roles", "User"));
 });
 
 
