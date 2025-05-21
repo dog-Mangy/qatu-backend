@@ -24,7 +24,7 @@ public class ValidateGuidMiddleware
                 await context.Response.WriteAsync("The ID is missing from the route.");
                 return;
             }
-            
+
         }
 
         await _next(context);

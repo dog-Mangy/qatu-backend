@@ -20,7 +20,7 @@ namespace Qatu.Application.UseCases.Products
                 StoreId = dto.StoreId,
                 Name = dto.Name,
                 Description = dto.Description,
-                Category = dto.Category,
+                CategoryId = dto.CategoryId,
                 Price = dto.Price,
                 Stock = dto.Stock ?? 0,
             }).ToList();

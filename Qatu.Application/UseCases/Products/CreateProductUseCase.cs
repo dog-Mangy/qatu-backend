@@ -20,7 +20,7 @@ namespace Qatu.Application.UseCases.Products
             product.StoreId = command.StoreId;
             product.Name = command.Name;
             product.Description = command.Description;
-            product.Category = command.Category;
+            product.CategoryId = command.CategoryId;
             product.Price = command.Price;
             product.Stock = command.Stock ?? 0;
 
