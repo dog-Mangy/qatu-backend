@@ -102,6 +102,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "VendorPolicy")]
 
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto dto)
     {
