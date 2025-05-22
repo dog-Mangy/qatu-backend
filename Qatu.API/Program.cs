@@ -42,15 +42,24 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminPolicy", policy =>
-        policy.RequireClaim($"{audience}/roles", "Admin"));
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireAssertion(context =>
+        {
+            var roles = context.User.FindAll($"{audience}/roles").Select(c => c.Value);
+            return roles.Contains("User") || roles.Contains("Vendor") || roles.Contains("Admin");
+        }));
 
     options.AddPolicy("VendorPolicy", policy =>
-        policy.RequireClaim($"{audience}/roles", "Vendor"));
+        policy.RequireAssertion(context =>
+        {
+            var roles = context.User.FindAll($"{audience}/roles").Select(c => c.Value);
+            return roles.Contains("Vendor") || roles.Contains("Admin");
+        }));
 
-    options.AddPolicy("UserPolicy", policy =>
-        policy.RequireClaim($"{audience}/roles", "User"));
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim($"{audience}/roles", "Admin"));
 });
+
 
 
 //Product
