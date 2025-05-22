@@ -20,15 +20,15 @@ namespace Qatu.Tests.Unit.UseCases.Products
             var mockRepo = new Mock<IProductRepository>();
             var dtos = new List<CreateProductDto>
             {
-                new CreateProductDto { StoreId = Guid.NewGuid(), Name = "Prod1", Description = "Desc1", CategoryId = Guid.NewGuid(), Price = 10, Stock = 5 },
-                new CreateProductDto { StoreId = Guid.NewGuid(), Name = "Prod2", Description = "Desc2", CategoryId = Guid.NewGuid(), Price = 20, Stock = 7 }
+                new CreateProductDto { StoreId = Guid.NewGuid(), Name = "Prod1", Description = "Desc1", Category = "Categoria1", Price = 10, Stock = 5 },
+                new CreateProductDto { StoreId = Guid.NewGuid(), Name = "Prod2", Description = "Desc2", Category = "Categoria2", Price = 20, Stock = 7 }
             };
             var expectedProducts = dtos.Select(dto => new Product
             {
                 StoreId = dto.StoreId,
                 Name = dto.Name,
                 Description = dto.Description,
-                CategoryId = dto.CategoryId,
+                Category = dto.Category,
                 Price = dto.Price,
                 Stock = dto.Stock ?? 0
             }).ToList();
@@ -78,7 +78,7 @@ namespace Qatu.Tests.Unit.UseCases.Products
             var mockRepo = new Mock<IProductRepository>();
             var dtos = new List<CreateProductDto>
             {
-                new CreateProductDto { StoreId = System.Guid.NewGuid(), Name = "Prod", Description = "Desc", CategoryId = Guid.NewGuid(), Price = 10, Stock = null }
+                new CreateProductDto { StoreId = System.Guid.NewGuid(), Name = "Prod", Description = "Desc", Category = "CategoriaTest", Price = 10, Stock = null } // Cambiado aquí
             };
             mockRepo.Setup(r => r.AddAsyncRange(It.IsAny<List<Product>>()))
                 .ReturnsAsync((List<Product> products) => products);

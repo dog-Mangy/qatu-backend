@@ -20,7 +20,7 @@ namespace Qatu.Tests.Unit.UseCases.Products
                 StoreId = Guid.NewGuid(),
                 Name = "Test Product",
                 Description = "Test Description",
-                CategoryId = Guid.NewGuid(), // Cambia esto
+                Category = "CategoriaTest", // Cambiado aquí
                 Price = 100,
                 Stock = 5
             };
@@ -37,14 +37,14 @@ namespace Qatu.Tests.Unit.UseCases.Products
                 p.StoreId == dto.StoreId &&
                 p.Name == dto.Name &&
                 p.Description == dto.Description &&
-                p.CategoryId == dto.CategoryId && // Cambia esto
+                p.Category == dto.Category && // Cambiado aquí
                 p.Price == dto.Price &&
                 p.Stock == dto.Stock
             )), Times.Once);
 
+            Assert.Equal(dto.Category, result.Category); // Cambiado aquí
             Assert.Equal(dto.Name, result.Name);
             Assert.Equal(dto.Description, result.Description);
-            Assert.Equal(dto.CategoryId, result.CategoryId); // Cambia esto
             Assert.Equal(dto.Price, result.Price);
             Assert.Equal(dto.Stock, result.Stock);
         }
@@ -56,15 +56,15 @@ namespace Qatu.Tests.Unit.UseCases.Products
             var mockRepo = new Mock<IProductRepository>();
             var dto = new CreateProductDto
             {
-                StoreId = System.Guid.NewGuid(),
+                StoreId = Guid.NewGuid(),
                 Name = "Test Product",
                 Description = "Test Description",
-                CategoryId = Guid.NewGuid(), // Cambia esto
+                Category = "CategoriaTest", // Cambiado aquí
                 Price = 100,
                 Stock = null
             };
             mockRepo.Setup(r => r.AddAsync(It.IsAny<Product>()))
-                .Returns(Task.CompletedTask); // ✅ Esto es para Task
+                .Returns(Task.CompletedTask);
 
             var useCase = new CreateProductUseCase(mockRepo.Object);
 

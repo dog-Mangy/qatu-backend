@@ -23,7 +23,7 @@ namespace Qatu.Tests.Unit.UseCases.Products
                 StoreId = Guid.NewGuid(),
                 Name = "Nuevo nombre",
                 Description = "Nueva descripción",
-                CategoryId = Guid.NewGuid(),
+                Category = "CategoriaTest", // Cambiado aquí
                 Price = 123.45m,
                 Rating = 4.5m,
                 Stock = 10
@@ -44,7 +44,7 @@ namespace Qatu.Tests.Unit.UseCases.Products
             Assert.Equal(dto.StoreId, product.StoreId);
             Assert.Equal(dto.Name, product.Name);
             Assert.Equal(dto.Description, product.Description);
-            Assert.Equal(dto.CategoryId, product.CategoryId);
+            Assert.Equal(dto.Category, product.Category); // Cambiado aquí
             Assert.Equal(dto.Price, product.Price);
             Assert.Equal(dto.Rating, product.Rating);
             Assert.Equal(dto.Stock, product.Stock);
@@ -62,7 +62,7 @@ namespace Qatu.Tests.Unit.UseCases.Products
                 StoreId = Guid.NewGuid(),
                 Name = "Nuevo nombre",
                 Description = "Nueva descripción",
-                CategoryId = Guid.NewGuid(),
+                Category = "CategoriaTest", // Cambiado aquí
                 Price = 123.45m,
                 Rating = 4.5m,
                 Stock = 10
