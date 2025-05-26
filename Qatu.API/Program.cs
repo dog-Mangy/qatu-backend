@@ -3,17 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-
 using Qatu.Application.UseCases.Categories;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Stores;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Repositories;
-
+using Qatu.Infrastructure.Persistence.Repositories;
+using Qatu.Application.UseCases.Chat;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,7 +76,17 @@ builder.Services.AddScoped<UpdateCategoryUseCase>();
 builder.Services.AddScoped<DeleteCategoryUseCase>();
 builder.Services.AddScoped<GetAllCategoriesUseCase>();
 
+//Chats
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<GetChatsByUserIdUseCase>();
+builder.Services.AddScoped<CreateChatUseCase>();
+builder.Services.AddScoped<GetMessagesByChatIdUseCase>();
 
+//Message
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
+//Sale
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 
