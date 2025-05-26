@@ -1,16 +1,17 @@
+using System.Security.Claims;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 
 using Qatu.Application.UseCases.Categories;
+using Qatu.Application.UseCases.Chat;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Stores;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
-using Qatu.Infrastructure.Repositories;
 using Qatu.Infrastructure.Persistence.Repositories;
-using Qatu.Application.UseCases.Chat;
+using Qatu.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

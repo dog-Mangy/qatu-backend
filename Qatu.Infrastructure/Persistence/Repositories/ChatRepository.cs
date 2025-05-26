@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 
 using Qatu.Domain.Entities;
-using Qatu.Domain.Interfaces;
 using Qatu.Domain.Enums;
+using Qatu.Domain.Interfaces;
 
 namespace Qatu.Infrastructure.Persistence.Repositories
 {
