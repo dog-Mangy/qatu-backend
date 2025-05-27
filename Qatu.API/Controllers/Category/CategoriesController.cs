@@ -31,6 +31,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> GetAll(Guid id)
         {
             var category = await _getAllCategoriesUseCase.ExecuteAsync();
@@ -41,7 +42,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "UserOnly")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var category = await _getCategoryById.ExecuteAsync(id);
@@ -52,6 +53,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
         {
             var createdCategory = await _createCategory.HandleAsync(dto);
@@ -59,6 +61,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCategoryDto dto)
         {
             var updatedCategory = await _updateCategory.HandleAsync(id, dto);
@@ -69,6 +72,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var deleted = await _deleteCategory.ExecuteAsync(id);
