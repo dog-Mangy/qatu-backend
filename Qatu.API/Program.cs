@@ -81,10 +81,11 @@ builder.Services.AddScoped<GetAllCategoriesUseCase>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<GetChatsByUserIdUseCase>();
 builder.Services.AddScoped<CreateChatUseCase>();
-builder.Services.AddScoped<GetMessagesByChatIdUseCase>();
 
 //Message
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<GetMessagesByChatIdUseCase>();
+builder.Services.AddScoped<CreateMessageUseCase>();
 
 //Sale
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
