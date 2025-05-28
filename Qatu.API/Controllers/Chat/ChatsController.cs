@@ -12,15 +12,18 @@ namespace Qatu.API.Controllers.Chat
         private readonly CreateChatUseCase _createChatUseCase;
         private readonly GetChatsByUserIdUseCase _getChatsByUserIdUseCase;
         private readonly GetMessagesByChatIdUseCase _getMessagesByChatIdUseCase;
+        private readonly CreateMessageUseCase _createMessageUseCase;
 
         public ChatsController(
             CreateChatUseCase createChatUseCase,
             GetChatsByUserIdUseCase getChatsByUserIdUseCase,
-            GetMessagesByChatIdUseCase getMessagesByChatIdUseCase)
+            GetMessagesByChatIdUseCase getMessagesByChatIdUseCase,
+            CreateMessageUseCase createMessageUseCase)
         {
             _createChatUseCase = createChatUseCase;
             _getChatsByUserIdUseCase = getChatsByUserIdUseCase;
             _getMessagesByChatIdUseCase = getMessagesByChatIdUseCase;
+            _createMessageUseCase = createMessageUseCase;
         }
 
         [HttpPost]
@@ -46,6 +49,13 @@ namespace Qatu.API.Controllers.Chat
                 return NotFound("No messages found for the specified chat.");
             }
             return Ok(messages);
+        }
+
+        [HttpPost("{chatId}/messages")]
+        public async Task<IActionResult> CreateMessage(Guid chatId, [FromBody] CreateMessageRequestDto request)
+        {
+            var message = await _createMessageUseCase.ExecuteAsync(chatId, request);
+            return CreatedAtAction(nameof(GetChatMessages), new { chatId = message.ChatId }, message);
         }
     }
 }
