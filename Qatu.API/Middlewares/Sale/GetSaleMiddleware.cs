@@ -1,7 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using MySqlConnector;
 using System.Net;
 using System.Text.Json;
+
+using Microsoft.EntityFrameworkCore;
+
+using MySqlConnector;
 
 namespace Qatu.API.Middlewares.Sale
 {
