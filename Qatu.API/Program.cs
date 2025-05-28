@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+using Qatu.API.Middlewares.Sale;
 using Qatu.Application.UseCases.Categories;
 using Qatu.Application.UseCases.Chat;
 using Qatu.Application.UseCases.Products;
+using Qatu.Application.UseCases.Sale;
 using Qatu.Application.UseCases.Stores;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
@@ -89,6 +91,10 @@ builder.Services.AddScoped<CreateMessageUseCase>();
 
 //Sale
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+builder.Services.AddScoped<UpdateSaleUseCase>();
+builder.Services.AddScoped<GetSaleByIdUseCase>();
+builder.Services.AddScoped<GetSaleByChatIdUseCase>();
+builder.Services.AddScoped<CheckSaleRelationshipUseCase>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 
@@ -149,6 +155,10 @@ app.UseMiddleware<CreateStoreMiddleware>();
 app.UseMiddleware<UpdateStoreMiddleware>();
 
 //Category
+// Sale
+app.UseMiddleware<UpdateSaleMiddleware>();
+app.UseMiddleware<GetSaleMiddleware>();
+app.UseMiddleware<CheckSaleRelationshipMiddleware>();
 
 app.MapControllers();
 
