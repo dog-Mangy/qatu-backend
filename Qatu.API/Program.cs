@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
+
 
 using Qatu.Application.UseCases.Categories;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Stores;
+using Qatu.Application.UseCases.Requests;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Repositories;
@@ -78,6 +77,12 @@ builder.Services.AddScoped<GetCategoryByIdUseCase>();
 builder.Services.AddScoped<UpdateCategoryUseCase>();
 builder.Services.AddScoped<DeleteCategoryUseCase>();
 builder.Services.AddScoped<GetAllCategoriesUseCase>();
+
+//Requests
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<GetAllRequestsUseCase>();
+builder.Services.AddScoped<CreateRequestUseCase>();
+builder.Services.AddScoped<DeleteRequestUseCase>();
 
 
 
