@@ -13,6 +13,8 @@ namespace Qatu.Infrastructure.Persistence
         public DbSet<Store> Stores { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Request> Requests { get; set; } 
+
         public QatuDbContext(DbContextOptions<QatuDbContext> options)
             : base(options) { }
 
@@ -51,6 +53,11 @@ namespace Qatu.Infrastructure.Persistence
             var furnitureCategoryId = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc");
             var decorCategoryId = Guid.Parse("dddddddd-dddd-dddd-dddd-dddddddddddd");
 
+            var request1Id = Guid.Parse("77777777-7777-7777-7777-777777777777");
+            var request2Id = Guid.Parse("88888888-8888-8888-8888-888888888888");
+            var request3Id = Guid.Parse("99999999-9999-9999-9999-999999999999");
+
+
             // Seed Users
             modelBuilder.Entity<User>().HasData(
                 new User { Id = adminId, Name = "Admin User", Email = "admin@qatu.com", Password = password, Role = UserRole.Admin, CreatedAt = DateTime.UtcNow },
@@ -74,6 +81,18 @@ namespace Qatu.Infrastructure.Persistence
                 new Category { Id = decorCategoryId, Name = "Home Decor", CreatedAt = DateTime.UtcNow }
             );
 
+            modelBuilder.Entity<Request>()
+                .HasOne(r => r.User)
+                .WithOne()
+                .HasForeignKey<Request>(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Seed Requests
+            modelBuilder.Entity<Request>().HasData(
+                new Request { Id = request1Id, UserId = adminId, Description = "Admin verification request", Status = RequestStatus.Pending, CreatedAt = DateTime.UtcNow },
+                new Request { Id = request2Id, UserId = sellerId, Description = "Request to update store info", Status = RequestStatus.Pending, CreatedAt = DateTime.UtcNow },
+                new Request { Id = request3Id, UserId = buyerId, Description = "Support needed for order issue", Status = RequestStatus.Pending, CreatedAt = DateTime.UtcNow }
+            );
 
             // Productos para cada tienda
             modelBuilder.Entity<Product>().HasData(
