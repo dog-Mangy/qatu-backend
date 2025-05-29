@@ -12,6 +12,9 @@ namespace Qatu.Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Sale> Sales { get; set; }
 
         public QatuDbContext(DbContextOptions<QatuDbContext> options)
             : base(options) { }
@@ -35,6 +38,69 @@ namespace Qatu.Infrastructure.Persistence
                 entity.Property(e => e.StoreId).HasColumnName("store_id");
             });
 
+            // Chat Configurations
+            modelBuilder.Entity<Chat>(entity =>
+            {
+                entity.ToTable("Chats");
+
+                entity.HasOne(c => c.Buyer)
+                    .WithMany()
+                    .HasForeignKey(c => c.BuyerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(c => c.Seller)
+                    .WithMany()
+                    .HasForeignKey(c => c.SellerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(c => c.Product)
+                    .WithMany()
+                    .HasForeignKey(c => c.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(c => c.Sale)
+                    .WithOne(s => s.Chat)
+                    .HasForeignKey<Sale>(s => s.ChatId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Message Configurations
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.ToTable("Messages");
+
+                entity.HasOne(m => m.Chat)
+                    .WithMany(c => c.Messages)
+                    .HasForeignKey(m => m.ChatId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(m => m.Sender)
+                    .WithMany()
+                    .HasForeignKey(m => m.SenderId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Sale Configurations
+            modelBuilder.Entity<Sale>(entity =>
+            {
+                entity.ToTable("Sales");
+
+                entity.HasOne(s => s.Buyer)
+                    .WithMany()
+                    .HasForeignKey(s => s.BuyerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(s => s.Seller)
+                    .WithMany()
+                    .HasForeignKey(s => s.SellerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(s => s.Product)
+                    .WithMany()
+                    .HasForeignKey(s => s.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
             // User IDs
             var adminId = Guid.Parse("11111111-1111-1111-1111-111111111111");
             var sellerId = Guid.Parse("22222222-2222-2222-2222-222222222222");
@@ -50,6 +116,16 @@ namespace Qatu.Infrastructure.Persistence
             var clothingCategoryId = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
             var furnitureCategoryId = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc");
             var decorCategoryId = Guid.Parse("dddddddd-dddd-dddd-dddd-dddddddddddd");
+
+            // Product IDs
+            var product1Id = Guid.Parse("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
+            var product2Id = Guid.Parse("b2c3d4e5-f6a7-8901-bcde-f23456789012");
+
+            // Chat and Sale IDs
+            var chat1Id = Guid.Parse("c1d2e3f4-a5b6-7890-abcd-ef1234567890");
+            var sale1Id = Guid.Parse("d2e3f4a5-b6c7-8901-bcde-f23456789012");
+            var chat2Id = Guid.Parse("e3f4a5b6-c7d8-9012-cdef-345678901234");
+            var sale2Id = Guid.Parse("f4a5b6c7-d8e9-0123-def0-456789012345");
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
@@ -78,8 +154,8 @@ namespace Qatu.Infrastructure.Persistence
             // Productos para cada tienda
             modelBuilder.Entity<Product>().HasData(
                 // Tech Store
-                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Smartphone", Description = "Latest model smartphone", CategoryId = electronicsCategoryId, Price = 699.99m, Rating = 4.5m, Stock = 50, CreatedAt = DateTime.UtcNow },
-                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Laptop", Description = "High-performance laptop", CategoryId = electronicsCategoryId, Price = 1299.99m, Rating = 4.8m, Stock = 20, CreatedAt = DateTime.UtcNow },
+                new Product { Id = product1Id, StoreId = store1Id, Name = "Smartphone", Description = "Latest model smartphone", CategoryId = electronicsCategoryId, Price = 699.99m, Rating = 4.5m, Stock = 50, CreatedAt = DateTime.UtcNow },
+                new Product { Id = product2Id, StoreId = store1Id, Name = "Laptop", Description = "High-performance laptop", CategoryId = electronicsCategoryId, Price = 1299.99m, Rating = 4.8m, Stock = 20, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Tablet", Description = "Lightweight and portable", CategoryId = electronicsCategoryId, Price = 499.99m, Rating = 4.3m, Stock = 30, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Smartwatch", Description = "Fitness tracker", CategoryId = electronicsCategoryId, Price = 199.99m, Rating = 4.1m, Stock = 40, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Headphones", Description = "Noise-canceling headphones", CategoryId = electronicsCategoryId, Price = 149.99m, Rating = 4.4m, Stock = 25, CreatedAt = DateTime.UtcNow },
@@ -96,6 +172,26 @@ namespace Qatu.Infrastructure.Persistence
                 new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Bed Frame", Description = "Queen size bed frame", CategoryId = furnitureCategoryId, Price = 299.99m, Rating = 4.7m, Stock = 5, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Lamp", Description = "LED floor lamp", CategoryId = furnitureCategoryId, Price = 49.99m, Rating = 4.2m, Stock = 30, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Carpet", Description = "Soft area rug", CategoryId = furnitureCategoryId, Price = 99.99m, Rating = 4.3m, Stock = 20, CreatedAt = DateTime.UtcNow }
+            );
+
+            // Seed Chats
+            modelBuilder.Entity<Chat>().HasData(
+                new { Id = chat1Id, BuyerId = buyerId, SellerId = sellerId, ProductId = product1Id, CreatedAt = DateTime.UtcNow },
+                new { Id = chat2Id, BuyerId = buyerId, SellerId = sellerId, ProductId = product2Id, CreatedAt = DateTime.UtcNow }
+            );
+
+            // Seed Sales
+            modelBuilder.Entity<Sale>().HasData(
+                new { Id = sale1Id, ChatId = chat1Id, BuyerId = buyerId, SellerId = sellerId, ProductId = product1Id, Status = SaleStatus.Waiting, CreatedAt = DateTime.UtcNow },
+                new { Id = sale2Id, ChatId = chat2Id, BuyerId = buyerId, SellerId = sellerId, ProductId = product2Id, Status = SaleStatus.Pending, CreatedAt = DateTime.UtcNow }
+            );
+
+            // Seed Messages
+            modelBuilder.Entity<Message>().HasData(
+                new { Id = Guid.NewGuid(), ChatId = chat1Id, SenderId = buyerId, Content = "Hi, is the smartphone still in stock?", SentAt = DateTime.UtcNow },
+                new { Id = Guid.NewGuid(), ChatId = chat1Id, SenderId = sellerId, Content = "Yes, we have 50 units available!", SentAt = DateTime.UtcNow.AddMinutes(5) },
+                new { Id = Guid.NewGuid(), ChatId = chat2Id, SenderId = buyerId, Content = "Can you tell me more about the laptop?", SentAt = DateTime.UtcNow },
+                new { Id = Guid.NewGuid(), ChatId = chat2Id, SenderId = sellerId, Content = "It has 16GB RAM and a 1TB SSD.", SentAt = DateTime.UtcNow.AddMinutes(5) }
             );
         }
     }
