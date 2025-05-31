@@ -1,15 +1,15 @@
 using System.Text;
-using System.Text.RegularExpressions;
-
+using System.Text.Json;
+ 
 public class CreateProductMiddleware
 {
     private readonly RequestDelegate _next;
-
+ 
     public CreateProductMiddleware(RequestDelegate next)
     {
         _next = next;
     }
-
+ 
     public async Task InvokeAsync(HttpContext context)
     {
         if (context.Request.Path.Equals("/api/products", StringComparison.OrdinalIgnoreCase) &&
@@ -22,57 +22,43 @@ public class CreateProductMiddleware
                 detectEncodingFromByteOrderMarks: false,
                 bufferSize: 1024,
                 leaveOpen: true);
-
+ 
             var body = await reader.ReadToEndAsync();
             context.Request.Body.Position = 0;
-
+ 
             var errors = new List<string>();
-
-            var storeIdMatch = Regex.Match(body, @"""storeId""\s*:\s*""([^""]+)""", RegexOptions.IgnoreCase);
-            var priceMatch = Regex.Match(body, @"""price""\s*:\s*(\S+)", RegexOptions.IgnoreCase);
-            var stockMatch = Regex.Match(body, @"""stock""\s*:\s*(\S+)", RegexOptions.IgnoreCase);
-
-            if (storeIdMatch.Success)
+ 
+            try
             {
-                var storeIdRaw = storeIdMatch.Groups[1].Value;
-
-                if (!Guid.TryParse(storeIdRaw, out var storeId) || storeId == Guid.Empty)
+                var jsonDoc = JsonDocument.Parse(body);
+                var root = jsonDoc.RootElement;
+ 
+                if (!root.TryGetProperty("storeId", out var storeIdProp) ||
+                    !Guid.TryParse(storeIdProp.GetString(), out var storeId) || storeId == Guid.Empty)
                     errors.Add("StoreId must be a valid non-empty UUID.");
-            }
-            else
-            {
-                errors.Add("StoreId is required and must be a valid UUID.");
-            }
-
-            if (priceMatch.Success)
-            {
-                if (!decimal.TryParse(priceMatch.Groups[1].Value, out var price) || price < 0)
+ 
+                if (!root.TryGetProperty("price", out var priceProp) ||
+                    !priceProp.TryGetDecimal(out var price) || price < 0)
                     errors.Add("Price must be a non-negative decimal number.");
-            }
-            else
-            {
-                errors.Add("Price is required and must be valid.");
-            }
-
-            if (stockMatch.Success)
-            {
-                if (!int.TryParse(stockMatch.Groups[1].Value, out var stock) || stock < 0)
+ 
+                if (!root.TryGetProperty("stock", out var stockProp) ||
+                    !stockProp.TryGetInt32(out var stock) || stock < 0)
                     errors.Add("Stock must be a non-negative integer.");
             }
-            else
+            catch (JsonException)
             {
-                errors.Add("Stock is required and must be valid.");
+                errors.Add("Invalid JSON format.");
             }
-
+ 
             if (errors.Any())
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new { errors }));
+                await context.Response.WriteAsync(JsonSerializer.Serialize(new { errors }));
                 return;
             }
         }
-
+ 
         await _next(context);
     }
 }
