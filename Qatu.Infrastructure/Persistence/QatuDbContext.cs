@@ -89,9 +89,36 @@ namespace Qatu.Infrastructure.Persistence
 
             // Seed Requests
             modelBuilder.Entity<Request>().HasData(
-                new Request { Id = request1Id, UserId = adminId, Description = "Admin verification request", Status = RequestStatus.Pending, CreatedAt = DateTime.UtcNow },
-                new Request { Id = request2Id, UserId = sellerId, Description = "Request to update store info", Status = RequestStatus.Pending, CreatedAt = DateTime.UtcNow },
-                new Request { Id = request3Id, UserId = buyerId, Description = "Support needed for order issue", Status = RequestStatus.Pending, CreatedAt = DateTime.UtcNow }
+                new Request
+                {
+                    Id = request1Id,
+                    UserId = adminId,
+                    StoreName = "Admin Store",
+                    StoreDescription = "Store managed by admin",
+                    Description = "Admin verification request",
+                    Status = RequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Request
+                {
+                    Id = request2Id,
+                    UserId = sellerId,
+                    StoreName = "SuperElectro",
+                    StoreDescription = "Electronics and gadgets",
+                    Description = "Request to update store info",
+                    Status = RequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Request
+                {
+                    Id = request3Id,
+                    UserId = buyerId,
+                    StoreName = "Temporary Buyer Store",
+                    StoreDescription = "Store created for buyer support request",
+                    Description = "Support needed for order issue",
+                    Status = RequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                }
             );
 
             // Productos para cada tienda
