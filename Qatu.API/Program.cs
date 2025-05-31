@@ -67,6 +67,7 @@ builder.Services.AddScoped<GetProductsUseCase>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<CreateStoreUseCase>();
 builder.Services.AddScoped<GetStoreByIdUseCase>();
+builder.Services.AddScoped<GetStoresUseCase>();
 builder.Services.AddScoped<UpdateStoreUseCase>();
 builder.Services.AddScoped<DeleteStoreUseCase>();
 
@@ -83,6 +84,8 @@ builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<GetAllRequestsUseCase>();
 builder.Services.AddScoped<CreateRequestUseCase>();
 builder.Services.AddScoped<DeleteRequestUseCase>();
+builder.Services.AddScoped<UpdateRequestStatusUseCase>();
+
 
 
 
