@@ -1,18 +1,20 @@
+using System.Security.Claims;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-using System.Text.Json.Serialization;
-
-
+using Qatu.API.Middlewares.Sale;
 using Qatu.Application.UseCases.Categories;
+using Qatu.Application.UseCases.Chat;
 using Qatu.Application.UseCases.Products;
+using Qatu.Application.UseCases.Sale;
 using Qatu.Application.UseCases.Stores;
 using Qatu.Application.UseCases.Requests;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
+using Qatu.Infrastructure.Persistence.Repositories;
 using Qatu.Infrastructure.Repositories;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,15 +43,24 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminPolicy", policy =>
-        policy.RequireClaim($"{audience}/roles", "Admin"));
+    options.AddPolicy("UserPolicy", policy =>
+        policy.RequireAssertion(context =>
+        {
+            var roles = context.User.FindAll($"{audience}/roles").Select(c => c.Value);
+            return roles.Contains("User") || roles.Contains("Vendor") || roles.Contains("Admin");
+        }));
 
     options.AddPolicy("VendorPolicy", policy =>
-        policy.RequireClaim($"{audience}/roles", "Vendor"));
+        policy.RequireAssertion(context =>
+        {
+            var roles = context.User.FindAll($"{audience}/roles").Select(c => c.Value);
+            return roles.Contains("Vendor") || roles.Contains("Admin");
+        }));
 
-    options.AddPolicy("UserPolicy", policy =>
-        policy.RequireClaim($"{audience}/roles", "User"));
+    options.AddPolicy("AdminPolicy", policy =>
+        policy.RequireClaim($"{audience}/roles", "Admin"));
 });
+
 
 
 //Product
@@ -87,7 +98,22 @@ builder.Services.AddScoped<DeleteRequestUseCase>();
 builder.Services.AddScoped<UpdateRequestStatusUseCase>();
 
 
+//Chats
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<GetChatsByUserIdUseCase>();
+builder.Services.AddScoped<CreateChatUseCase>();
 
+//Message
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<GetMessagesByChatIdUseCase>();
+builder.Services.AddScoped<CreateMessageUseCase>();
+
+//Sale
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+builder.Services.AddScoped<UpdateSaleUseCase>();
+builder.Services.AddScoped<GetSaleByIdUseCase>();
+builder.Services.AddScoped<GetSaleByChatIdUseCase>();
+builder.Services.AddScoped<CheckSaleRelationshipUseCase>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 
@@ -148,6 +174,10 @@ app.UseMiddleware<CreateStoreMiddleware>();
 app.UseMiddleware<UpdateStoreMiddleware>();
 
 //Category
+// Sale
+app.UseMiddleware<UpdateSaleMiddleware>();
+app.UseMiddleware<GetSaleMiddleware>();
+app.UseMiddleware<CheckSaleRelationshipMiddleware>();
 
 app.MapControllers();
 
