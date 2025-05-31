@@ -1,5 +1,3 @@
-using System;
-
 using Qatu.Domain.Enums;
 
 namespace Qatu.Domain.Entities
@@ -10,6 +8,9 @@ namespace Qatu.Domain.Entities
 
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;
+
+        public string StoreName { get; set; } = null!;
+        public string StoreDescription { get; set; } = null!;
 
         public string Description { get; set; } = null!;
 

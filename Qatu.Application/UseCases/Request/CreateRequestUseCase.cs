@@ -19,6 +19,8 @@ namespace Qatu.Application.UseCases.Requests
             Request request = new()
             {
                 UserId = command.UserId,
+                StoreName = command.StoreName,
+                StoreDescription = command.StoreDescription,
                 Description = command.Description,
                 Status = Qatu.Domain.Enums.RequestStatus.Pending,
                 CreatedAt = DateTime.UtcNow

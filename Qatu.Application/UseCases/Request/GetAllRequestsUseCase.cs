@@ -21,6 +21,8 @@ namespace Qatu.Application.UseCases.Requests
             {
                 Id = request.Id,
                 UserId = request.UserId,
+                StoreName = request.StoreName,
+                StoreDescription = request.StoreDescription,
                 Description = request.Description,
                 Status = request.Status,
                 CreatedAt = request.CreatedAt,
