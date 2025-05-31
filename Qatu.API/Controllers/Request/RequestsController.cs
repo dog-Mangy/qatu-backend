@@ -42,7 +42,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = "AdminPolicy")]
+        [Authorize(Policy = "UserPolicy")]
         public async Task<IActionResult> Create([FromBody] CreateRequestDto dto)
         {
             var createdRequest = await _createRequestUseCase.HandleAsync(dto);
