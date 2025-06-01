@@ -104,9 +104,9 @@ namespace Qatu.Infrastructure.Persistence
             });
 
             // User IDs
-            var adminId = Guid.Parse("11111111-1111-1111-1111-111111111111");
-            var sellerId = Guid.Parse("22222222-2222-2222-2222-222222222222");
-            var buyerId = Guid.Parse("33333333-3333-3333-3333-333333333333");
+            var adminId = Guid.Parse("44147d07-ae1c-45ae-af1c-984ff4d49eba");
+            var sellerId = Guid.Parse("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869");
+            var buyerId = Guid.Parse("87b84069-9bda-4b44-8d0d-d52c3a8bbc74");
 
             // Store IDs
             var store1Id = Guid.Parse("44444444-4444-4444-4444-444444444444");
@@ -204,16 +204,16 @@ namespace Qatu.Infrastructure.Persistence
                 new Product { Id = product2Id, StoreId = store1Id, Name = "Laptop", Description = "High-performance laptop", CategoryId = electronicsCategoryId, Price = 1299.99m, Rating = 4.8m, Stock = 20, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Tablet", Description = "Lightweight and portable", CategoryId = electronicsCategoryId, Price = 499.99m, Rating = 4.3m, Stock = 30, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Smartwatch", Description = "Fitness tracker", CategoryId = electronicsCategoryId, Price = 199.99m, Rating = 4.1m, Stock = 40, CreatedAt = DateTime.UtcNow },
-                new Product { Id = Guid.NewGuid(), StoreId = store1Id, Name = "Headphones", Description = "Noise-canceling headphones", CategoryId = electronicsCategoryId, Price = 149.99m, Rating = 4.4m, Stock = 25, CreatedAt = DateTime.UtcNow },
+                new Product { Id = new Guid("30a8c927-9774-4057-9f6a-2c4158d2b2d3"), StoreId = store1Id, Name = "Headphones", Description = "Noise-canceling headphones", CategoryId = electronicsCategoryId, Price = 149.99m, Rating = 4.4m, Stock = 25, CreatedAt = DateTime.UtcNow },
 
                 // Fashion Store
-                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "Jeans", Description = "Blue denim jeans", CategoryId = clothingCategoryId, Price = 49.99m, Rating = 4.2m, Stock = 100, CreatedAt = DateTime.UtcNow },
-                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "T-Shirt", Description = "100% Cotton T-shirt", CategoryId = clothingCategoryId, Price = 19.99m, Rating = 4.0m, Stock = 150, CreatedAt = DateTime.UtcNow },
-                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "Jacket", Description = "Waterproof winter jacket", CategoryId = clothingCategoryId, Price = 99.99m, Rating = 4.3m, Stock = 60, CreatedAt = DateTime.UtcNow },
-                new Product { Id = Guid.NewGuid(), StoreId = store2Id, Name = "Sneakers", Description = "Comfortable sneakers", CategoryId = clothingCategoryId, Price = 59.99m, Rating = 4.2m, Stock = 120, CreatedAt = DateTime.UtcNow },
+                new Product { Id = new Guid("377f3896-ed4d-4e68-ad30-02cc65e426b8"), StoreId = store2Id, Name = "Jeans", Description = "Blue denim jeans", CategoryId = clothingCategoryId, Price = 49.99m, Rating = 4.2m, Stock = 100, CreatedAt = DateTime.UtcNow },
+                new Product { Id = new Guid("45726569-0a33-4ed1-9ce3-072324033594"), StoreId = store2Id, Name = "T-Shirt", Description = "100% Cotton T-shirt", CategoryId = clothingCategoryId, Price = 19.99m, Rating = 4.0m, Stock = 150, CreatedAt = DateTime.UtcNow },
+                new Product { Id = new Guid("73e0fe7b-530b-4cc1-9ad0-a028f116b0a8"), StoreId = store2Id, Name = "Jacket", Description = "Waterproof winter jacket", CategoryId = clothingCategoryId, Price = 99.99m, Rating = 4.3m, Stock = 60, CreatedAt = DateTime.UtcNow },
+                new Product { Id = new Guid("7a44753c-aa8c-480f-ade8-bcf20ab8a6ce"), StoreId = store2Id, Name = "Sneakers", Description = "Comfortable sneakers", CategoryId = clothingCategoryId, Price = 59.99m, Rating = 4.2m, Stock = 120, CreatedAt = DateTime.UtcNow },
 
                 // Home Store
-                new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Sofa", Description = "Modern 3-seater sofa", CategoryId = furnitureCategoryId, Price = 899.99m, Rating = 4.6m, Stock = 10, CreatedAt = DateTime.UtcNow },
+                new Product { Id = new Guid("81461fab-579e-4b88-8406-8c66890f59a3"), StoreId = store3Id, Name = "Sofa", Description = "Modern 3-seater sofa", CategoryId = furnitureCategoryId, Price = 899.99m, Rating = 4.6m, Stock = 10, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Dining Table", Description = "Solid wood dining table", CategoryId = furnitureCategoryId, Price = 499.99m, Rating = 4.5m, Stock = 15, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Bed Frame", Description = "Queen size bed frame", CategoryId = furnitureCategoryId, Price = 299.99m, Rating = 4.7m, Stock = 5, CreatedAt = DateTime.UtcNow },
                 new Product { Id = Guid.NewGuid(), StoreId = store3Id, Name = "Lamp", Description = "LED floor lamp", CategoryId = furnitureCategoryId, Price = 49.99m, Rating = 4.2m, Stock = 30, CreatedAt = DateTime.UtcNow },
