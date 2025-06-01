@@ -10,6 +10,7 @@ using Qatu.Application.UseCases.Chat;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Sale;
 using Qatu.Application.UseCases.Stores;
+using Qatu.Application.UseCases.Requests;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Persistence.Repositories;
@@ -77,6 +78,7 @@ builder.Services.AddScoped<GetProductsUseCase>();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<CreateStoreUseCase>();
 builder.Services.AddScoped<GetStoreByIdUseCase>();
+builder.Services.AddScoped<GetStoresUseCase>();
 builder.Services.AddScoped<UpdateStoreUseCase>();
 builder.Services.AddScoped<DeleteStoreUseCase>();
 
@@ -87,6 +89,14 @@ builder.Services.AddScoped<GetCategoryByIdUseCase>();
 builder.Services.AddScoped<UpdateCategoryUseCase>();
 builder.Services.AddScoped<DeleteCategoryUseCase>();
 builder.Services.AddScoped<GetAllCategoriesUseCase>();
+
+//Requests
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<GetAllRequestsUseCase>();
+builder.Services.AddScoped<CreateRequestUseCase>();
+builder.Services.AddScoped<DeleteRequestUseCase>();
+builder.Services.AddScoped<UpdateRequestStatusUseCase>();
+
 
 //Chats
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
@@ -140,11 +150,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
+
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 

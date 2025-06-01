@@ -12,6 +12,8 @@ namespace Qatu.Infrastructure.Persistence
         public DbSet<Product> Products { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Request> Requests { get; set; } 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Sale> Sales { get; set; }
@@ -117,6 +119,11 @@ namespace Qatu.Infrastructure.Persistence
             var furnitureCategoryId = Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc");
             var decorCategoryId = Guid.Parse("dddddddd-dddd-dddd-dddd-dddddddddddd");
 
+            var request1Id = Guid.Parse("77777777-7777-7777-7777-777777777777");
+            var request2Id = Guid.Parse("88888888-8888-8888-8888-888888888888");
+            var request3Id = Guid.Parse("99999999-9999-9999-9999-999999999999");
+
+
             // Product IDs
             var product1Id = Guid.Parse("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
             var product2Id = Guid.Parse("b2c3d4e5-f6a7-8901-bcde-f23456789012");
@@ -150,6 +157,45 @@ namespace Qatu.Infrastructure.Persistence
                 new Category { Id = decorCategoryId, Name = "Home Decor", CreatedAt = DateTime.UtcNow }
             );
 
+            modelBuilder.Entity<Request>()
+                .HasOne(r => r.User)
+                .WithOne()
+                .HasForeignKey<Request>(r => r.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Seed Requests
+            modelBuilder.Entity<Request>().HasData(
+                new Request
+                {
+                    Id = request1Id,
+                    UserId = adminId,
+                    StoreName = "Admin Store",
+                    StoreDescription = "Store managed by admin",
+                    Description = "Admin verification request",
+                    Status = RequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Request
+                {
+                    Id = request2Id,
+                    UserId = sellerId,
+                    StoreName = "SuperElectro",
+                    StoreDescription = "Electronics and gadgets",
+                    Description = "Request to update store info",
+                    Status = RequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Request
+                {
+                    Id = request3Id,
+                    UserId = buyerId,
+                    StoreName = "Temporary Buyer Store",
+                    StoreDescription = "Store created for buyer support request",
+                    Description = "Support needed for order issue",
+                    Status = RequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                }
+            );
 
             // Productos para cada tienda
             modelBuilder.Entity<Product>().HasData(
