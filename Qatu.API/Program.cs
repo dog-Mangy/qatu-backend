@@ -10,6 +10,7 @@ using Qatu.Application.UseCases.Chat;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Sale;
 using Qatu.Application.UseCases.Stores;
+using Qatu.Application.UseCases.Users;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Persistence.Repositories;
@@ -105,7 +106,11 @@ builder.Services.AddScoped<GetSaleByIdUseCase>();
 builder.Services.AddScoped<GetSaleByChatIdUseCase>();
 builder.Services.AddScoped<CheckSaleRelationshipUseCase>();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
+//Users
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<SaveUserUseCase>();
+
+var connectionString = "server=localhost;database=DS4_Qatu;user=user;password=userpassword;";
 
 builder.Services.AddDbContext<QatuDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
