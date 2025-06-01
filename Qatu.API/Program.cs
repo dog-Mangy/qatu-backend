@@ -10,7 +10,11 @@ using Qatu.Application.UseCases.Chat;
 using Qatu.Application.UseCases.Products;
 using Qatu.Application.UseCases.Sale;
 using Qatu.Application.UseCases.Stores;
+<<<<<<< HEAD
 using Qatu.Application.UseCases.Requests;
+=======
+>>>>>>> 4c01f18fee3aed3a15c3412dbe1e1d7b2f78759f
+using Qatu.Application.UseCases.Users;
 using Qatu.Domain.Interfaces;
 using Qatu.Infrastructure.Persistence;
 using Qatu.Infrastructure.Persistence.Repositories;
@@ -117,6 +121,10 @@ builder.Services.AddScoped<UpdateSaleUseCase>();
 builder.Services.AddScoped<GetSaleByIdUseCase>();
 builder.Services.AddScoped<GetSaleByChatIdUseCase>();
 builder.Services.AddScoped<CheckSaleRelationshipUseCase>();
+
+//Users
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<SaveUserUseCase>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultDevConnection");
 
