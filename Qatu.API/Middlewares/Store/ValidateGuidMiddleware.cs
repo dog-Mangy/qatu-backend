@@ -11,6 +11,12 @@ public class ValidateGuidMiddleware
     {
         var path = context.Request.Path.Value?.ToLower();
 
+        if (path != null && path.StartsWith("/api/stores/paged"))
+        {
+            await _next(context);
+            return;
+        }
+
         if ((context.Request.Method == HttpMethods.Get ||
              context.Request.Method == HttpMethods.Put ||
              context.Request.Method == HttpMethods.Delete) &&

@@ -10,9 +10,10 @@ public class StoresController : ControllerBase
     private readonly CreateStoreUseCase _createStore;
     private readonly GetStoreByIdUseCase _getStoreById;
     private readonly GetStoresUseCase _getStores;
-    private readonly GetStoresByUserIdUseCase _getStoresByUserId; // 👈 Nuevo
+    private readonly GetStoresByUserIdUseCase _getStoresByUserId; 
     private readonly UpdateStoreUseCase _updateStore;
     private readonly DeleteStoreUseCase _deleteStore;
+    private readonly GetStoresPagedUseCase _getPagedStores;
 
     public StoresController(
         CreateStoreUseCase createStore,
@@ -20,7 +21,8 @@ public class StoresController : ControllerBase
         GetStoresUseCase getStores,
         GetStoresByUserIdUseCase getStoresByUserId, 
         UpdateStoreUseCase updateStore,
-        DeleteStoreUseCase deleteStore)
+        DeleteStoreUseCase deleteStore,
+        GetStoresPagedUseCase getPagedStores)
     {
         _createStore = createStore;
         _getStoreById = getStoreById;
@@ -28,6 +30,7 @@ public class StoresController : ControllerBase
         _getStoresByUserId = getStoresByUserId; 
         _updateStore = updateStore;
         _deleteStore = deleteStore;
+        _getPagedStores = getPagedStores;
     }
 
     [HttpGet("{id}")]
@@ -41,18 +44,25 @@ public class StoresController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "AdminPolicy")]
     public async Task<IActionResult> GetAll()
     {
         var stores = await _getStores.ExecuteAsync();
         return Ok(stores);
     }
 
-    [HttpGet("user/{userId}")] 
-    public async Task<IActionResult> GetByUserId(Guid userId)
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetStoresPaged(
+    [FromQuery] string? searchQuery,
+    [FromQuery] Guid? userId,
+    [FromQuery] string? sortBy = "CreatedAt",
+    [FromQuery] bool ascending = true,
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
     {
-        var stores = await _getStoresByUserId.ExecuteAsync(userId);
-        return Ok(stores);
+        var result = await _getPagedStores.ExecutePagedAsync(
+            page, pageSize, userId, sortBy, searchQuery, ascending
+        );
+        return Ok(result);
     }
 
     [HttpPost]
