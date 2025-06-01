@@ -258,10 +258,10 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "ImageUrl", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), null, new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8951), null, null, "Electronics", null },
-                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), null, new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8953), null, null, "Clothing", null },
-                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), null, new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8955), null, null, "Furniture", null },
-                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), null, new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8959), null, null, "Home Decor", null }
+                    { new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), null, new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(526), null, null, "Electronics", null },
+                    { new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), null, new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(540), null, null, "Clothing", null },
+                    { new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), null, new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(542), null, null, "Furniture", null },
+                    { new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd"), null, new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(543), null, null, "Home Decor", null }
                 });
 
             migrationBuilder.InsertData(
@@ -269,9 +269,9 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Email", "Name", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("44147d07-ae1c-45ae-af1c-984ff4d49eba"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8757), "admin@qatu.com", "Admin User", 0 },
-                    { new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8774), "buyer@qatu.com", "Buyer User", 1 },
-                    { new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8772), "seller@qatu.com", "Seller User", 2 }
+                    { new Guid("44147d07-ae1c-45ae-af1c-984ff4d49eba"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(301), "admin@qatu.com", "Admin User", 0 },
+                    { new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(307), "buyer@qatu.com", "Buyer User", 1 },
+                    { new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(305), "seller@qatu.com", "Seller User", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -279,9 +279,9 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Status", "StoreDescription", "StoreName", "UpdatedAt", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9937), "Admin verification request", 0, "Store managed by admin", "Admin Store", null, new Guid("44147d07-ae1c-45ae-af1c-984ff4d49eba") },
-                    { new Guid("88888888-8888-8888-8888-888888888888"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9940), "Request to update store info", 0, "Electronics and gadgets", "SuperElectro", null, new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") },
-                    { new Guid("99999999-9999-9999-9999-999999999999"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9942), "Support needed for order issue", 0, "Store created for buyer support request", "Temporary Buyer Store", null, new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74") }
+                    { new Guid("77777777-7777-7777-7777-777777777777"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1702), "Admin verification request", 0, "Store managed by admin", "Admin Store", null, new Guid("44147d07-ae1c-45ae-af1c-984ff4d49eba") },
+                    { new Guid("88888888-8888-8888-8888-888888888888"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1706), "Request to update store info", 0, "Electronics and gadgets", "SuperElectro", null, new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") },
+                    { new Guid("99999999-9999-9999-9999-999999999999"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1708), "Support needed for order issue", 0, "Store created for buyer support request", "Temporary Buyer Store", null, new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74") }
                 });
 
             migrationBuilder.InsertData(
@@ -289,9 +289,9 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("44444444-4444-4444-4444-444444444444"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8921), "Electronics and gadgets", "Tech Store", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") },
-                    { new Guid("55555555-5555-5555-5555-555555555555"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8923), "Clothing and accessories", "Fashion Store", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") },
-                    { new Guid("66666666-6666-6666-6666-666666666666"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(8925), "Home essentials and furniture", "Home Store", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") }
+                    { new Guid("44444444-4444-4444-4444-444444444444"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(493), "Electronics and gadgets", "Tech Store", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") },
+                    { new Guid("55555555-5555-5555-5555-555555555555"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(497), "Clothing and accessories", "Fashion Store", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(499), "Home essentials and furniture", "Home Store", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869") }
                 });
 
             migrationBuilder.InsertData(
@@ -299,20 +299,20 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "CategoryId", "created_at", "Description", "Name", "Price", "Rating", "Stock", "store_id" },
                 values: new object[,]
                 {
-                    { new Guid("119886a5-c965-43ff-bcf8-cb4c95135066"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9976), "Lightweight and portable", "Tablet", 499.99m, 4.3m, 30, new Guid("44444444-4444-4444-4444-444444444444") },
-                    { new Guid("30a8c927-9774-4057-9f6a-2c4158d2b2d3"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9987), "Noise-canceling headphones", "Headphones", 149.99m, 4.4m, 25, new Guid("44444444-4444-4444-4444-444444444444") },
-                    { new Guid("377f3896-ed4d-4e68-ad30-02cc65e426b8"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9990), "Blue denim jeans", "Jeans", 49.99m, 4.2m, 100, new Guid("55555555-5555-5555-5555-555555555555") },
-                    { new Guid("39ebf0fb-2b2e-49ac-8c7c-056cc5f1d4cd"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(9), "Queen size bed frame", "Bed Frame", 299.99m, 4.7m, 5, new Guid("66666666-6666-6666-6666-666666666666") },
-                    { new Guid("45726569-0a33-4ed1-9ce3-072324033594"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9993), "100% Cotton T-shirt", "T-Shirt", 19.99m, 4.0m, 150, new Guid("55555555-5555-5555-5555-555555555555") },
-                    { new Guid("493d166f-58c8-4c02-ac07-efff021bdb13"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(6), "Solid wood dining table", "Dining Table", 499.99m, 4.5m, 15, new Guid("66666666-6666-6666-6666-666666666666") },
-                    { new Guid("73e0fe7b-530b-4cc1-9ad0-a028f116b0a8"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9996), "Waterproof winter jacket", "Jacket", 99.99m, 4.3m, 60, new Guid("55555555-5555-5555-5555-555555555555") },
-                    { new Guid("7a44753c-aa8c-480f-ade8-bcf20ab8a6ce"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9999), "Comfortable sneakers", "Sneakers", 59.99m, 4.2m, 120, new Guid("55555555-5555-5555-5555-555555555555") },
-                    { new Guid("81461fab-579e-4b88-8406-8c66890f59a3"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(1), "Modern 3-seater sofa", "Sofa", 899.99m, 4.6m, 10, new Guid("66666666-6666-6666-6666-666666666666") },
-                    { new Guid("83386c63-5b7e-45bc-8720-6e9c3185ede5"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(12), "LED floor lamp", "Lamp", 49.99m, 4.2m, 30, new Guid("66666666-6666-6666-6666-666666666666") },
-                    { new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9969), "Latest model smartphone", "Smartphone", 699.99m, 4.5m, 50, new Guid("44444444-4444-4444-4444-444444444444") },
-                    { new Guid("b2c3d4e5-f6a7-8901-bcde-f23456789012"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9972), "High-performance laptop", "Laptop", 1299.99m, 4.8m, 20, new Guid("44444444-4444-4444-4444-444444444444") },
-                    { new Guid("b3daaaef-3854-4570-ac28-4b7daa08b74f"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 1, 5, 487, DateTimeKind.Utc).AddTicks(9982), "Fitness tracker", "Smartwatch", 199.99m, 4.1m, 40, new Guid("44444444-4444-4444-4444-444444444444") },
-                    { new Guid("bb267be4-5ccd-4728-9ee5-422a2bd10c07"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(14), "Soft area rug", "Carpet", 99.99m, 4.3m, 20, new Guid("66666666-6666-6666-6666-666666666666") }
+                    { new Guid("0e371e9c-8e32-4973-befd-8056be6be8fe"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1798), "Soft area rug", "Carpet", 99.99m, 4.3m, 20, new Guid("66666666-6666-6666-6666-666666666666") },
+                    { new Guid("30a8c927-9774-4057-9f6a-2c4158d2b2d3"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1762), "Noise-canceling headphones", "Headphones", 149.99m, 4.4m, 25, new Guid("44444444-4444-4444-4444-444444444444") },
+                    { new Guid("377f3896-ed4d-4e68-ad30-02cc65e426b8"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1765), "Blue denim jeans", "Jeans", 49.99m, 4.2m, 100, new Guid("55555555-5555-5555-5555-555555555555") },
+                    { new Guid("45726569-0a33-4ed1-9ce3-072324033594"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1770), "100% Cotton T-shirt", "T-Shirt", 19.99m, 4.0m, 150, new Guid("55555555-5555-5555-5555-555555555555") },
+                    { new Guid("6cdd6f5b-3201-48dc-8a6d-fb7c0dfaa891"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1790), "Queen size bed frame", "Bed Frame", 299.99m, 4.7m, 5, new Guid("66666666-6666-6666-6666-666666666666") },
+                    { new Guid("73e0fe7b-530b-4cc1-9ad0-a028f116b0a8"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1773), "Waterproof winter jacket", "Jacket", 99.99m, 4.3m, 60, new Guid("55555555-5555-5555-5555-555555555555") },
+                    { new Guid("7a44753c-aa8c-480f-ade8-bcf20ab8a6ce"), new Guid("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1779), "Comfortable sneakers", "Sneakers", 59.99m, 4.2m, 120, new Guid("55555555-5555-5555-5555-555555555555") },
+                    { new Guid("81461fab-579e-4b88-8406-8c66890f59a3"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1782), "Modern 3-seater sofa", "Sofa", 899.99m, 4.6m, 10, new Guid("66666666-6666-6666-6666-666666666666") },
+                    { new Guid("8db4cc91-52c7-4ab4-8886-653db2e07bc6"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1785), "Solid wood dining table", "Dining Table", 499.99m, 4.5m, 15, new Guid("66666666-6666-6666-6666-666666666666") },
+                    { new Guid("930a26f1-9900-40e0-a4a5-acf294d8d91b"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1752), "Lightweight and portable", "Tablet", 499.99m, 4.3m, 30, new Guid("44444444-4444-4444-4444-444444444444") },
+                    { new Guid("9b322bca-1f4e-4660-9ef3-96e727453ad2"), new Guid("cccccccc-cccc-cccc-cccc-cccccccccccc"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1793), "LED floor lamp", "Lamp", 49.99m, 4.2m, 30, new Guid("66666666-6666-6666-6666-666666666666") },
+                    { new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1740), "Latest model smartphone", "Smartphone", 699.99m, 4.5m, 50, new Guid("44444444-4444-4444-4444-444444444444") },
+                    { new Guid("b073c12b-c068-433d-8add-36c8040020d9"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1755), "Fitness tracker", "Smartwatch", 199.99m, 4.1m, 40, new Guid("44444444-4444-4444-4444-444444444444") },
+                    { new Guid("b2c3d4e5-f6a7-8901-bcde-f23456789012"), new Guid("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1744), "High-performance laptop", "Laptop", 1299.99m, 4.8m, 20, new Guid("44444444-4444-4444-4444-444444444444") }
                 });
 
             migrationBuilder.InsertData(
@@ -320,8 +320,8 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "BuyerId", "CreatedAt", "ProductId", "SellerId", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(41), new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), null },
-                    { new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(42), new Guid("b2c3d4e5-f6a7-8901-bcde-f23456789012"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), null }
+                    { new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1832), new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), null },
+                    { new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1834), new Guid("b2c3d4e5-f6a7-8901-bcde-f23456789012"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), null }
                 });
 
             migrationBuilder.InsertData(
@@ -329,10 +329,10 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "ChatId", "Content", "SenderId", "SentAt" },
                 values: new object[,]
                 {
-                    { new Guid("1819bd1a-7ca1-41f7-b730-2db6f90c840d"), new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), "Yes, we have 50 units available!", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), new DateTime(2025, 6, 1, 23, 6, 5, 488, DateTimeKind.Utc).AddTicks(79) },
-                    { new Guid("3166aa4c-3482-4a86-80b6-5da56cd05a9b"), new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), "It has 16GB RAM and a 1TB SSD.", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), new DateTime(2025, 6, 1, 23, 6, 5, 488, DateTimeKind.Utc).AddTicks(83) },
-                    { new Guid("32bc6551-6497-4e0c-a36a-e7cce38e5f54"), new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), "Hi, is the smartphone still in stock?", new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(77) },
-                    { new Guid("66f642f3-1af6-4396-888c-19b49b8ced89"), new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), "Can you tell me more about the laptop?", new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(82) }
+                    { new Guid("55b744a4-8f58-4e6e-9525-138c045f7fb6"), new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), "Can you tell me more about the laptop?", new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1883) },
+                    { new Guid("5fe703a1-2d97-4677-a8c5-a8ccc320dc41"), new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), "It has 16GB RAM and a 1TB SSD.", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), new DateTime(2025, 6, 1, 23, 20, 8, 160, DateTimeKind.Utc).AddTicks(1885) },
+                    { new Guid("7f48d1b2-99fe-4542-966f-c7b1a2ed4d22"), new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), "Yes, we have 50 units available!", new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), new DateTime(2025, 6, 1, 23, 20, 8, 160, DateTimeKind.Utc).AddTicks(1879) },
+                    { new Guid("9e17da1a-e58c-472b-9de9-0949a9021b36"), new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), "Hi, is the smartphone still in stock?", new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1877) }
                 });
 
             migrationBuilder.InsertData(
@@ -340,8 +340,8 @@ namespace Qatu.Infrastructure.Migrations
                 columns: new[] { "Id", "BuyerId", "ChatId", "CreatedAt", "ProductId", "SellerId", "Status", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("d2e3f4a5-b6c7-8901-bcde-f23456789012"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(59), new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), 0, null },
-                    { new Guid("f4a5b6c7-d8e9-0123-def0-456789012345"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), new DateTime(2025, 6, 1, 23, 1, 5, 488, DateTimeKind.Utc).AddTicks(59), new Guid("b2c3d4e5-f6a7-8901-bcde-f23456789012"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), 1, null }
+                    { new Guid("d2e3f4a5-b6c7-8901-bcde-f23456789012"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new Guid("c1d2e3f4-a5b6-7890-abcd-ef1234567890"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1855), new Guid("a1b2c3d4-e5f6-7890-abcd-ef1234567890"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), 0, null },
+                    { new Guid("f4a5b6c7-d8e9-0123-def0-456789012345"), new Guid("87b84069-9bda-4b44-8d0d-d52c3a8bbc74"), new Guid("e3f4a5b6-c7d8-9012-cdef-345678901234"), new DateTime(2025, 6, 1, 23, 15, 8, 160, DateTimeKind.Utc).AddTicks(1856), new Guid("b2c3d4e5-f6a7-8901-bcde-f23456789012"), new Guid("a89bff1d-2db6-4e9e-8fd2-bf3ee3ed8869"), 1, null }
                 });
 
             migrationBuilder.CreateIndex(
