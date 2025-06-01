@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using Qatu.Application.DTOs.Store;
 using Qatu.Application.UseCases.Stores;
 
@@ -10,20 +9,23 @@ public class StoresController : ControllerBase
 {
     private readonly CreateStoreUseCase _createStore;
     private readonly GetStoreByIdUseCase _getStoreById;
+    private readonly GetStoresUseCase _getStores;
+    private readonly GetStoresByUserIdUseCase _getStoresByUserId; // 👈 Nuevo
     private readonly UpdateStoreUseCase _updateStore;
     private readonly DeleteStoreUseCase _deleteStore;
-    private readonly GetStoresUseCase _getStores;
 
     public StoresController(
         CreateStoreUseCase createStore,
         GetStoreByIdUseCase getStoreById,
         GetStoresUseCase getStores,
+        GetStoresByUserIdUseCase getStoresByUserId, 
         UpdateStoreUseCase updateStore,
         DeleteStoreUseCase deleteStore)
     {
         _createStore = createStore;
         _getStoreById = getStoreById;
         _getStores = getStores;
+        _getStoresByUserId = getStoresByUserId; 
         _updateStore = updateStore;
         _deleteStore = deleteStore;
     }
@@ -43,6 +45,13 @@ public class StoresController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var stores = await _getStores.ExecuteAsync();
+        return Ok(stores);
+    }
+
+    [HttpGet("user/{userId}")] 
+    public async Task<IActionResult> GetByUserId(Guid userId)
+    {
+        var stores = await _getStoresByUserId.ExecuteAsync(userId);
         return Ok(stores);
     }
 
