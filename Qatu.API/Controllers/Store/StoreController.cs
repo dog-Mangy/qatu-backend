@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using Qatu.Application.DTOs.Store;
 using Qatu.Application.UseCases.Stores;
 
@@ -10,15 +9,17 @@ public class StoresController : ControllerBase
 {
     private readonly CreateStoreUseCase _createStore;
     private readonly GetStoreByIdUseCase _getStoreById;
+    private readonly GetStoresUseCase _getStores;
+    private readonly GetStoresByUserIdUseCase _getStoresByUserId; 
     private readonly UpdateStoreUseCase _updateStore;
     private readonly DeleteStoreUseCase _deleteStore;
-    private readonly GetStoresUseCase _getStores;
     private readonly GetStoresPagedUseCase _getPagedStores;
 
     public StoresController(
         CreateStoreUseCase createStore,
         GetStoreByIdUseCase getStoreById,
         GetStoresUseCase getStores,
+        GetStoresByUserIdUseCase getStoresByUserId, 
         UpdateStoreUseCase updateStore,
         DeleteStoreUseCase deleteStore,
         GetStoresPagedUseCase getPagedStores)
@@ -26,6 +27,7 @@ public class StoresController : ControllerBase
         _createStore = createStore;
         _getStoreById = getStoreById;
         _getStores = getStores;
+        _getStoresByUserId = getStoresByUserId; 
         _updateStore = updateStore;
         _deleteStore = deleteStore;
         _getPagedStores = getPagedStores;
@@ -91,3 +93,4 @@ public class StoresController : ControllerBase
         return NoContent();
     }
 }
+

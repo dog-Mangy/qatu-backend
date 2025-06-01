@@ -79,9 +79,11 @@ builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<CreateStoreUseCase>();
 builder.Services.AddScoped<GetStoreByIdUseCase>();
 builder.Services.AddScoped<GetStoresUseCase>();
+builder.Services.AddScoped<GetStoresByUserIdUseCase>();
 builder.Services.AddScoped<UpdateStoreUseCase>();
 builder.Services.AddScoped<DeleteStoreUseCase>();
 builder.Services.AddScoped<GetStoresPagedUseCase>();
+
 
 //Category
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -171,7 +173,6 @@ app.UseMiddleware<PaginationMiddleware>();
 app.UseMiddleware<UpdateProductMiddleware>();
 
 // Store
-app.UseMiddleware<ValidateGuidMiddleware>();
 app.UseMiddleware<CreateStoreMiddleware>();
 app.UseMiddleware<UpdateStoreMiddleware>();
 
