@@ -50,6 +50,13 @@ public class StoresController : ControllerBase
         return Ok(stores);
     }
 
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetByUserId(Guid userId)
+    {
+        var stores = await _getStoresByUserId.ExecuteAsync(userId);
+        return Ok(stores);
+    }
+
     [HttpGet("paged")]
     public async Task<IActionResult> GetStoresPaged(
     [FromQuery] string? searchQuery,
