@@ -136,9 +136,9 @@ namespace Qatu.Infrastructure.Persistence
 
             // Seed Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = adminId, Name = "Admin User", Email = "admin@qatu.com", Password = password, Role = UserRole.Admin, CreatedAt = DateTime.UtcNow },
-                new User { Id = sellerId, Name = "Seller User", Email = "seller@qatu.com", Password = password, Role = UserRole.Seller, CreatedAt = DateTime.UtcNow },
-                new User { Id = buyerId, Name = "Buyer User", Email = "buyer@qatu.com", Password = password, Role = UserRole.Buyer, CreatedAt = DateTime.UtcNow }
+                new User { Id = adminId, Name = "Admin User", Email = "admin@qatu.com", Role = UserRole.Admin, CreatedAt = DateTime.UtcNow },
+                new User { Id = sellerId, Name = "Seller User", Email = "seller@qatu.com",  Role = UserRole.Seller, CreatedAt = DateTime.UtcNow },
+                new User { Id = buyerId, Name = "Buyer User", Email = "buyer@qatu.com",Role = UserRole.Buyer, CreatedAt = DateTime.UtcNow }
             );
 
             // Seed Stores
