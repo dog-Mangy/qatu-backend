@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Qatu.Application.DTOs.Store;
@@ -11,15 +12,18 @@ public class StoresController : ControllerBase
     private readonly GetStoreByIdUseCase _getStoreById;
     private readonly UpdateStoreUseCase _updateStore;
     private readonly DeleteStoreUseCase _deleteStore;
+    private readonly GetStoresUseCase _getStores;
 
     public StoresController(
         CreateStoreUseCase createStore,
         GetStoreByIdUseCase getStoreById,
+        GetStoresUseCase getStores,
         UpdateStoreUseCase updateStore,
         DeleteStoreUseCase deleteStore)
     {
         _createStore = createStore;
         _getStoreById = getStoreById;
+        _getStores = getStores;
         _updateStore = updateStore;
         _deleteStore = deleteStore;
     }
@@ -34,7 +38,16 @@ public class StoresController : ControllerBase
         return Ok(store);
     }
 
+    [HttpGet]
+    [Authorize(Policy = "AdminPolicy")]
+    public async Task<IActionResult> GetAll()
+    {
+        var stores = await _getStores.ExecuteAsync();
+        return Ok(stores);
+    }
+
     [HttpPost]
+    [Authorize(Policy = "AdminPolicy")]
     public async Task<IActionResult> Create([FromBody] CreateStoreDto dto)
     {
         var createdStore = await _createStore.HandleAsync(dto);

@@ -31,7 +31,7 @@ namespace Qatu.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "AdminPolicy")]
+        [Authorize(Policy = "VendorPolicy")]
         public async Task<IActionResult> GetAll(Guid id)
         {
             var category = await _getAllCategoriesUseCase.ExecuteAsync();
