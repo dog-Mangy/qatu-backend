@@ -13,19 +13,22 @@ public class StoresController : ControllerBase
     private readonly UpdateStoreUseCase _updateStore;
     private readonly DeleteStoreUseCase _deleteStore;
     private readonly GetStoresUseCase _getStores;
+    private readonly GetStoresPagedUseCase _getPagedStores;
 
     public StoresController(
         CreateStoreUseCase createStore,
         GetStoreByIdUseCase getStoreById,
         GetStoresUseCase getStores,
         UpdateStoreUseCase updateStore,
-        DeleteStoreUseCase deleteStore)
+        DeleteStoreUseCase deleteStore,
+        GetStoresPagedUseCase getPagedStores)
     {
         _createStore = createStore;
         _getStoreById = getStoreById;
         _getStores = getStores;
         _updateStore = updateStore;
         _deleteStore = deleteStore;
+        _getPagedStores = getPagedStores;
     }
 
     [HttpGet("{id}")]
@@ -39,11 +42,25 @@ public class StoresController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = "AdminPolicy")]
     public async Task<IActionResult> GetAll()
     {
         var stores = await _getStores.ExecuteAsync();
         return Ok(stores);
+    }
+
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetStoresPaged(
+    [FromQuery] string? searchQuery,
+    [FromQuery] Guid? userId,
+    [FromQuery] string? sortBy = "CreatedAt",
+    [FromQuery] bool ascending = true,
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
+    {
+        var result = await _getPagedStores.ExecutePagedAsync(
+            page, pageSize, userId, sortBy, searchQuery, ascending
+        );
+        return Ok(result);
     }
 
     [HttpPost]
