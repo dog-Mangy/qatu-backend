@@ -83,3 +83,4 @@ public class StoresController : ControllerBase
         return NoContent();
     }
 }
+
