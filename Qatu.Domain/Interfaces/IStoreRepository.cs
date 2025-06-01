@@ -10,5 +10,13 @@ namespace Qatu.Domain.Interfaces
         Task AddAsync(Store store);
         Task UpdateAsync(Store store);
         Task DeleteAsync(Guid id);
+        Task<int> CountAsync(Guid? userId = null);
+        Task<List<Store>> GetPagedFilteredAndSortedAsync(
+            Guid? userId,
+            string? sortBy,
+            string? searchQuery,
+            bool ascending,
+            int page,
+            int pageSize);
     }
 }

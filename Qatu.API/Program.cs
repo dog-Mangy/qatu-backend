@@ -81,6 +81,7 @@ builder.Services.AddScoped<GetStoreByIdUseCase>();
 builder.Services.AddScoped<GetStoresUseCase>();
 builder.Services.AddScoped<UpdateStoreUseCase>();
 builder.Services.AddScoped<DeleteStoreUseCase>();
+builder.Services.AddScoped<GetStoresPagedUseCase>();
 
 //Category
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
