@@ -18,18 +18,40 @@ namespace Qatu.Application.UseCases.Users
             _repository = repository;
         }
 
-        public async Task<User> HandleAsync(Guid storeId, SaveUserDTO userDTO)
+        public async Task<User> ExecuteAsync(SaveUserDTO userDTO)
         {
-            User user = new()
+            var existingUser = await _repository.GetByIdAsync(userDTO.Id);
+            if (existingUser != null)
+            {
+                throw new Exception("User already exists");
+            }
+
+            var userToCreate = new User
             {
                 Id = userDTO.Id,
                 Name = userDTO.Name,
                 Role = userDTO.Role,
+                CreatedAt = userDTO.CreatedAt,
+                Email = userDTO.Email
             };
 
-            await _repository.AddAsync(user);
+            try
+            {
+                await _repository.AddAsync(userToCreate);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw new Exception("User could not be created");
+            }
 
-            return await _repository.GetByIdAsync(userDTO.Id); ;
+            var userCreated = await _repository.GetByIdAsync(userDTO.Id);
+            if (userCreated == null)
+            {
+                throw new Exception("Error creating user");
+            }
+
+            return userCreated;
         }
     }
 }
