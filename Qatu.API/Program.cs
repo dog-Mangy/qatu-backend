@@ -170,7 +170,7 @@ app.UseAuthorization();
 
 
 app.UseMiddleware<RouteMiddleware>();
-app.UseMiddleware<CreateProductMiddleware>();
+//app.UseMiddleware<CreateProductMiddleware>();
 app.UseMiddleware<NewPriceMiddleware>();
 app.UseMiddleware<NewStockMiddleware>();
 app.UseMiddleware<ProductListMiddleware>();

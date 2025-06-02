@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using Qatu.Application.DTOs.User;
@@ -15,39 +16,47 @@ namespace Qatu.API.Controllers.User
     {
         private SaveUserUseCase _saveUserUseCase;
 
-        public UserController(
-            SaveUserUseCase saveUserUseCase)
+        public UserController(SaveUserUseCase saveUserUseCase)
         {
             _saveUserUseCase = saveUserUseCase;
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SaveUser()
+        public async Task<IActionResult> SaveUser([FromBody] SaveUserRequest body)
         {
-            var uuid = User.FindFirst("https://qatu.api/uuid")?.Value;
-            var name = User.FindFirst("name")?.Value;
-            var email = User.FindFirst("email")?.Value;
-            var rolesClaim = User.FindFirst("https://qatu.api/roles")?.Value;
-
-            List<string> roles = new List<string>();
-            if (!string.IsNullOrEmpty(rolesClaim))
+            if (!ModelState.IsValid)
             {
-                roles = System.Text.Json.JsonSerializer.Deserialize<List<string>>(rolesClaim);
+                return BadRequest(ModelState);
             }
 
-            var dto = new SaveUserDTO
+            try
             {
-                Id = uuid != null ? Guid.Parse(uuid) : Guid.NewGuid(),
-                Name = name ?? "",
-                Email = email ?? "",
-                Role = getRole(roles),
-                CreatedAt = DateTime.UtcNow
-            };
+                var uuid = User.FindFirst("https://qatu.api/uuid")?.Value;
+                var roles = User.FindAll("https://qatu.api/roles").Select(c => c.Value).ToList();
 
+                var dto = new SaveUserDTO
+                {
+                    Id = uuid != null ? Guid.Parse(uuid) : Guid.NewGuid(),
+                    Name = body.Name ?? "",
+                    Email = body.Email ?? "",
+                    Role = getRole(roles),
+                    CreatedAt = DateTime.UtcNow
+                };
 
-            return Ok(dto);
+                var userCreated = await _saveUserUseCase.ExecuteAsync(dto);
+
+                return Ok(userCreated);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500, new { error = ex.Message });
+            }
         }
+
+
+
 
         private UserRole getRole(List<string>? roles)
         {
