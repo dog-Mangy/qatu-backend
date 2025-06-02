@@ -10,6 +10,7 @@ namespace Qatu.Domain.Entities
         public Guid CategoryId { get; set; }
 
         public string Name { get; set; } = null!;
+        public string Image { get; set; } = null!;
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public decimal Rating { get; set; } = 0.0m;
