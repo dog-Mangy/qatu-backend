@@ -135,7 +135,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -169,12 +169,10 @@ app.UseAuthorization();
 
 
 
-app.UseMiddleware<RouteMiddleware>();
 //app.UseMiddleware<CreateProductMiddleware>();
 app.UseMiddleware<NewPriceMiddleware>();
 app.UseMiddleware<NewStockMiddleware>();
 app.UseMiddleware<ProductListMiddleware>();
-app.UseMiddleware<PaginationMiddleware>();
 app.UseMiddleware<UpdateProductMiddleware>();
 
 // Store
