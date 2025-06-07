@@ -23,7 +23,7 @@ deploy_backend:
     - echo "Variables cargadas:"
     - env | grep -E 'MYSQL|BACKEND'
   script:
-    - docker-compose pull backend
+    - docker-compose pull api
     - docker-compose down
     - docker-compose up -d
     - docker ps
