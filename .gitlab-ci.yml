@@ -9,17 +9,24 @@ deploy_backend:
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
+
+    # Variables de entorno para docker-compose
+    MYSQL_PORT: 3306
+    MYSQL_ROOT_PASSWORD: rootpassword
+    MYSQL_DATABASE: DS4_Qatu
+    MYSQL_USER: user
+    MYSQL_PASSWORD: userpassword
+    BACKEND_PORT: 8080
+
   before_script:
     - apk add --no-cache docker-compose
-    - ls -la && cat .env 
+    - echo "Variables cargadas:"
+    - env | grep -E 'MYSQL|BACKEND'
   script:
     - docker-compose pull backend
-
     - docker-compose down
-
     - docker-compose up -d
-
     - docker ps
     - docker logs backend || true
 
-  when: manual   
+  when: manual
