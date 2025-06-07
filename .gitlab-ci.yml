@@ -32,8 +32,10 @@ deploy_backend:
 
 acceptance_tests:
   stage: acceptance_tests
-  image: bash:latest  
+  image: bash:latest
   dependencies: [deploy_backend]
+  before_script:
+    - apt-get update && apt-get install -y curl
   script:
     - echo "Esperando a que el backend se inicie..."
     - sleep 10
