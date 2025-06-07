@@ -3,5 +3,16 @@ stages:
 
 backend_job:
   stage: backend_stage
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - apk add --no-cache docker-compose
   script:
-    - echo "Hello World from Backend"
+    - docker-compose up -d
+    - docker ps  
+    - sleep 20   
+    - docker logs backend  
