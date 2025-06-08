@@ -1,6 +1,6 @@
 stages:
   - deploy_backend
-  - acceptance_tests   # ← nueva etapa
+  - acceptance_tests
 
 deploy_backend:
   stage: deploy_backend
@@ -27,21 +27,18 @@ deploy_backend:
     - docker-compose up -d
     - docker ps
     - docker logs backend || true
-
   when: manual
 
 acceptance_tests:
   stage: acceptance_tests
-  image: bash:latest
+  image: curlimages/curl:latest
   dependencies: [deploy_backend]
-  before_script:
-    - apt-get update && apt-get install -y curl
   script:
     - echo "Esperando a que el backend se inicie..."
     - sleep 10
     - |
       endpoints=(
-        "http://localhost:8080/api/products"
+        "http://host.docker.internal:8080/api/products"
       )
 
       success=true
