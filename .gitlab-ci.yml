@@ -1,7 +1,37 @@
 stages:
-  - backend_stage
+  - deploy_backend
+  - test
 
-backend_job:
-  stage: backend_stage
+deploy_backend:
+  stage: deploy_backend
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    MYSQL_PORT: 3306
+    MYSQL_ROOT_PASSWORD: rootpassword
+    MYSQL_DATABASE: DS4_Qatu
+    MYSQL_USER: user
+    MYSQL_PASSWORD: userpassword
+    BACKEND_PORT: 8080
+
+  before_script:
+    - apk add --no-cache docker-compose curl
+    - echo "Variables cargadas:"
+    - env | grep -E 'MYSQL|BACKEND'
   script:
-    - echo "Hello World from Backend"
+    - docker-compose pull api
+    - docker-compose down
+    - docker-compose up -d
+    - docker ps
+    - docker logs backend || true
+  when: manual
+
+unit_tests:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet restore
+    - dotnet test --no-build --verbosity normal
