@@ -30,32 +30,12 @@ deploy_backend:
   when: manual
 
 acceptance_tests:
-  stage: acceptance_tests
-  image: curlimages/curl:latest
-  dependencies: [deploy_backend]
+stages:
+  - test
+
+unit_tests:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:7.0
   script:
-    - echo "Esperando a que el backend se inicie..."
-    - sleep 10
-    - |
-      endpoints=(
-        "http://host.docker.internal:8080/api/products"
-      )
-
-      success=true
-      for endpoint in "${endpoints[@]}"; do
-        echo "Probando $endpoint..."
-        http_code=$(curl -s -o /dev/null -w "%{http_code}" "$endpoint")
-        if [ "$http_code" -ne 200 ]; then
-          echo "❌ Falló: $endpoint (HTTP $http_code)"
-          success=false
-        else
-          echo "✅ OK: $endpoint"
-        fi
-      done
-
-      if [ "$success" = false ]; then
-        echo "❌ Pruebas de aceptación fallidas"
-        exit 1
-      else
-        echo "✅ Todas las pruebas pasaron"
-      fi
+    - dotnet restore
+    - dotnet test --no-build --verbosity normal
