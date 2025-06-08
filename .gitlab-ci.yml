@@ -1,9 +1,22 @@
 stages:
-  - deploy_backend
+  - build
   - test
+  - deploy
+
+build:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet build
+
+test:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet test --no-build --verbosity normal
 
 deploy_backend:
-  stage: deploy_backend
+  stage: deploy
   image: docker:24.0.7
   services:
     - docker:24.0.7-dind
@@ -25,13 +38,8 @@ deploy_backend:
     - docker-compose pull api
     - docker-compose down
     - docker-compose up -d
+    - docker tag qatu-api:latest qatu-api:lts-2.3.2
+    - docker push qatu-api:lts-2.3.2
     - docker ps
     - docker logs backend || true
   when: manual
-
-unit_tests:
-  stage: test
-  image: mcr.microsoft.com/dotnet/sdk:9.0
-  script:
-    - dotnet restore
-    - dotnet test --no-build --verbosity normal
