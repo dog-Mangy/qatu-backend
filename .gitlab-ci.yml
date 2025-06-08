@@ -1,6 +1,6 @@
 stages:
   - deploy_backend
-  - acceptance_tests
+  - test
 
 deploy_backend:
   stage: deploy_backend
@@ -28,10 +28,6 @@ deploy_backend:
     - docker ps
     - docker logs backend || true
   when: manual
-
-acceptance_tests:
-stages:
-  - test
 
 unit_tests:
   stage: test
