@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - acceptance
 
 build:
   stage: build
@@ -21,3 +22,26 @@ unit_tests:
   script:
     - dotnet restore
     - dotnet test --no-build --verbosity normal
+
+acceptance_tests:
+  stage: acceptance
+  image: curlimages/curl:latest
+  script:
+    - endpoints=(
+        "http://http://localhost:5028/api/products"
+        "http://http://localhost:5028/api/products"
+        "http://http://localhost:5028/api/products"
+        "http://http://localhost:5028/api/products"
+      )
+    - |
+      for url in "${endpoints[@]}"; do
+        echo "Testing $url..."
+        http_code=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+        if [ "$http_code" -ne 200 ]; then
+          echo "❌ Error: $url returned status code $http_code"
+          exit 1
+        else
+          echo "✅ $url OK"
+        fi
+      done
+
