@@ -1,33 +1,19 @@
 stages:
-  - deploy_backend
+  - build
   - test
 
-deploy_backend:
-  stage: deploy_backend
+build:
+  stage: build
   image: docker:24.0.7
   services:
     - docker:24.0.7-dind
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
-    MYSQL_PORT: 3306
-    MYSQL_ROOT_PASSWORD: rootpassword
-    MYSQL_DATABASE: DS4_Qatu
-    MYSQL_USER: user
-    MYSQL_PASSWORD: userpassword
-    BACKEND_PORT: 8080
-
-  before_script:
-    - apk add --no-cache docker-compose curl
-    - echo "Variables cargadas:"
-    - env | grep -E 'MYSQL|BACKEND'
   script:
-    - docker-compose pull api
-    - docker-compose down
-    - docker-compose up -d
-    - docker ps
-    - docker logs backend || true
-  when: manual
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
 
 unit_tests:
   stage: test
