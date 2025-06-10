@@ -52,11 +52,16 @@ coverage:
   script:
     - dotnet tool install --global dotnet-reportgenerator-globaltool
     - export PATH="$PATH:/root/.dotnet/tools"
-    - dotnet test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-build
-    - reportgenerator -reports:"**/TestResults/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+    - rm -rf TestResults coveragereport
+    - dotnet test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-build --logger "trx;LogFileName=testresults.trx"
+    - find . -name "coverage.*" -type f -exec ls -la {} \;
+    - find . -name "TestResults" -type d -exec ls -la {} \;
+    - reportgenerator -reports:"**/coverage.cobertura.xml;**/coverage.opencover.xml" -targetdir:"coveragereport" -reporttypes:Html
   artifacts:
     paths:
       - coveragereport/
+    reports:
+      junit: "**/testresults.trx"
     expire_in: 1 week
 
 build_container:
