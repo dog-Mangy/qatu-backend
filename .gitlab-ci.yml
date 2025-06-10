@@ -51,18 +51,17 @@ coverage:
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
     - dotnet tool install --global dotnet-reportgenerator-globaltool
+    - dotnet tool install --global coverlet.console
     - export PATH="$PATH:/root/.dotnet/tools"
-    - rm -rf TestResults coveragereport
-    - dotnet test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-build --logger "trx;LogFileName=testresults.trx"
-    - find . -name "coverage.*" -type f -exec ls -la {} \;
-    - find . -name "TestResults" -type d -exec ls -la {} \;
-    - reportgenerator -reports:"**/coverage.cobertura.xml;**/coverage.opencover.xml" -targetdir:"coveragereport" -reporttypes:Html
+    - rm -rf coveragereport coverage/
+    - dotnet build Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-restore
+    - coverlet Qatu.Tests.Unit/bin/Debug/net9.0/Qatu.Tests.Unit.dll --target "dotnet" --targetargs "test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-build --nologo" --format cobertura --output coverage/coverage.cobertura.xml
+    - reportgenerator -reports:"coverage/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
   artifacts:
     paths:
       - coveragereport/
-    reports:
-      junit: "**/testresults.trx"
     expire_in: 1 week
+
 
 build_container:
   stage: build_container
