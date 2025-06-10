@@ -13,11 +13,11 @@ variables:
   VERSION_TAG: "DEV-$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
 
 compile:
-  stage: build
+  stage: compile
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
-    - dotnet restore Qatu.Tests.Unit/Qatu.Tests.Unit.csproj
-    - dotnet build Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-restore
+    - dotnet restore
+    - dotnet build --configuration Release --no-restore
   artifacts:
     paths:
       - "**/bin/"
@@ -38,6 +38,8 @@ build:
 unit_tests:
   stage: unit_tests
   image: mcr.microsoft.com/dotnet/sdk:9.0
+  dependencies:
+    - compile
   script:
     - dotnet test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --logger "trx;LogFileName=testresults.trx"
   artifacts:
@@ -49,19 +51,21 @@ unit_tests:
 coverage:
   stage: coverage
   image: mcr.microsoft.com/dotnet/sdk:9.0
+  dependencies:
+    - compile
   script:
     - dotnet tool install --global dotnet-reportgenerator-globaltool
     - dotnet tool install --global coverlet.console
     - export PATH="$PATH:/root/.dotnet/tools"
     - rm -rf coveragereport coverage/
-    - dotnet build Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-restore
+    - dotnet restore Qatu.Tests.Unit/Qatu.Tests.Unit.csproj
+    - dotnet build Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --configuration Debug
     - coverlet Qatu.Tests.Unit/bin/Debug/net9.0/Qatu.Tests.Unit.dll --target "dotnet" --targetargs "test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-build --nologo" --format cobertura --output coverage/coverage.cobertura.xml
     - reportgenerator -reports:"coverage/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
   artifacts:
     paths:
       - coveragereport/
     expire_in: 1 week
-
 
 build_container:
   stage: build_container
