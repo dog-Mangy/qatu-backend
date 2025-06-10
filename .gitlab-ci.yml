@@ -13,11 +13,11 @@ variables:
   VERSION_TAG: "DEV-$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
 
 compile:
-  stage: compile
+  stage: build
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
-    - dotnet restore
-    - dotnet build --configuration Release --no-restore
+    - dotnet restore Qatu.Tests.Unit/Qatu.Tests.Unit.csproj
+    - dotnet build Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-restore
   artifacts:
     paths:
       - "**/bin/"
