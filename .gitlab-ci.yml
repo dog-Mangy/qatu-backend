@@ -50,9 +50,10 @@ coverage:
   stage: coverage
   image: mcr.microsoft.com/dotnet/sdk:9.0
   script:
-    - dotnet tool install --global dotnet-reportgenerator-globaltool
+    - dotnet new tool-manifest
+    - dotnet tool install dotnet-reportgenerator-globaltool
     - dotnet test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-build
-    - reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+    - dotnet tool run reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
   artifacts:
     paths:
       - coveragereport/
