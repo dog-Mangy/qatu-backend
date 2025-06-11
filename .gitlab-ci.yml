@@ -1,10 +1,74 @@
 stages:
+  - compile
   - build
-  - test
-  - acceptance
+  - unit_tests
+  - coverage
+  - build_container
+  - push_container
+
+variables:
+  MAJOR_VERSION: "2"
+  MINOR_VERSION: "3"
+  PATCH_VERSION: "1"
+  VERSION_TAG: "DEV-$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
+
+compile:
+  stage: compile
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  script:
+    - dotnet restore
+    - dotnet build --configuration Release --no-restore
+  artifacts:
+    paths:
+      - "**/bin/"
+      - "**/obj/"
+    expire_in: 1 hour
 
 build:
   stage: build
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  dependencies:
+    - compile
+  script:
+    - dotnet publish Qatu.API/Qatu.API.csproj --configuration Release --output ./publish
+  artifacts:
+    paths:
+      - publish/
+
+unit_tests:
+  stage: unit_tests
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  dependencies:
+    - compile
+  script:
+    - dotnet test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --logger "trx;LogFileName=testresults.trx"
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - "**/*testresults.trx"
+
+coverage:
+  stage: coverage
+  image: mcr.microsoft.com/dotnet/sdk:9.0
+  dependencies:
+    - compile
+  script:
+    - dotnet tool install --global dotnet-reportgenerator-globaltool
+    - dotnet tool install --global coverlet.console
+    - export PATH="$PATH:/root/.dotnet/tools"
+    - rm -rf coveragereport coverage/
+    - dotnet restore Qatu.Tests.Unit/Qatu.Tests.Unit.csproj
+    - dotnet build Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --configuration Debug
+    - coverlet Qatu.Tests.Unit/bin/Debug/net9.0/Qatu.Tests.Unit.dll --target "dotnet" --targetargs "test Qatu.Tests.Unit/Qatu.Tests.Unit.csproj --no-build --nologo" --format cobertura --output coverage/coverage.cobertura.xml
+    - reportgenerator -reports:"coverage/coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+  artifacts:
+    paths:
+      - coveragereport/
+    expire_in: 1 week
+
+build_container:
+  stage: build_container
   image: docker:24.0.7
   services:
     - docker:24.0.7-dind
@@ -13,13 +77,23 @@ build:
     DOCKER_TLS_CERTDIR: ""
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+    - docker build -t $CI_REGISTRY_IMAGE:$VERSION_TAG .
+    - docker push $CI_REGISTRY_IMAGE:$VERSION_TAG
+  dependencies:
+    - build
 
-unit_tests:
-  stage: test
-  image: mcr.microsoft.com/dotnet/sdk:9.0
+push_container:
+  stage: push_container
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
-    - dotnet restore
-    - dotnet test --no-build --verbosity normal
-
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:$VERSION_TAG
+    - docker tag $CI_REGISTRY_IMAGE:$VERSION_TAG $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+  dependencies:
+    - build_container
