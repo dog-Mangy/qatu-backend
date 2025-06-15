@@ -4,6 +4,7 @@ stages:
   - unit_tests
   - coverage
   - scan
+  - quality_gate
   - build_container
   - push_container
 
@@ -112,3 +113,13 @@ sonarqube_scan:
       -Dsonar.login=$SONAR_TOKEN
   dependencies:
     - coverage
+
+quality_gate:
+  stage: quality_gate
+  image: curlimages/curl:latest
+  script:
+    - echo "Esperando resultados del Quality Gate..."
+    - >
+      curl -u $SONAR_TOKEN: https://verde-sonarqube.devops.jala.university/api/qualitygates/project_status?projectKey=qatu-api |
+      grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
+
