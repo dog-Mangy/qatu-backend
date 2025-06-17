@@ -69,37 +69,6 @@ coverage:
       - coveragereport/
     expire_in: 1 week
 
-build_container:
-  stage: build_container
-  image: docker:24.0.7
-  services:
-    - docker:24.0.7-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:$VERSION_TAG .
-    - docker push $CI_REGISTRY_IMAGE:$VERSION_TAG
-  dependencies:
-    - build
-
-push_container:
-  stage: push_container
-  image: docker:24.0.7
-  services:
-    - docker:24.0.7-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:$VERSION_TAG
-    - docker tag $CI_REGISTRY_IMAGE:$VERSION_TAG $CI_REGISTRY_IMAGE:latest
-    - docker push $CI_REGISTRY_IMAGE:latest
-  dependencies:
-    - build_container
-
 sonarqube_scan:
   stage: scan
   image: sonarsource/sonar-scanner-cli:latest
@@ -123,3 +92,53 @@ quality_gate:
       curl -u $SONAR_TOKEN: https://verde-sonarqube.devops.jala.university/api/qualitygates/project_status?projectKey=qatu-api |
       grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
 
+build_container:
+  stage: build_container
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$VERSION_TAG .
+    - docker push $CI_REGISTRY_IMAGE:$VERSION_TAG
+  dependencies:
+    - build
+
+push_container_dev:
+  stage: push_container
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:$VERSION_TAG
+    - docker tag $CI_REGISTRY_IMAGE:$VERSION_TAG $CI_REGISTRY_IMAGE:latest-dev
+    - docker push $CI_REGISTRY_IMAGE:latest-dev
+  dependencies:
+    - build_container
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+
+push_container_main:
+  stage: push_container
+  image: docker:24.0.7
+  services:
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:$VERSION_TAG
+    - docker tag $CI_REGISTRY_IMAGE:$VERSION_TAG $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+  dependencies:
+    - build_container
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
